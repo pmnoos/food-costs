@@ -1,0 +1,47 @@
+<% content_for :title, "Showing store" %>
+
+<div class="md:w-2/3 w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <h1 class="font-bold text-4xl">Showing store</h1>
+
+  <%= render @store %>
+
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">Purchases</h2>
+
+    <% @products_by_date.each do |date, products| %>
+      <h3 class="text-xl font-semibold mt-6 mb-2"><%= date.strftime("%A, %B %d, %Y") %></h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="w-1/4 py-2 px-4 text-left">Product</th>
+              <th class="w-1/4 py-2 px-4 text-left">Unit Price</th>
+              <th class="w-1/4 py-2 px-4 text-left">Quantity</th>
+              <th class="w-1/4 py-2 px-4 text-left">Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% products.each do |product| %>
+              <tr class="border-b">
+                <td class="py-2 px-4"><%= product.name %></td>
+                <td class="py-2 px-4"><%= number_to_currency(product.unit_price) %></td>
+                <td class="py-2 px-4"><%= product.quantity %></td>
+                <td class="py-2 px-4"><%= number_to_currency(product.total_cost) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-8">
+    <%= link_to "Edit this store", edit_store_path(@store), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+    <%= link_to "Back to stores", stores_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+    <%= button_to "Destroy this store", @store, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  </div>
+</div>
