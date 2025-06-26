@@ -1,0 +1,21 @@
+{
+  "ruby.useLanguageServer": true,
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true
+    }
+  },
+  "ruby.format": "rubocop",
+  "ruby.intellisense": "rubyLsp",
+  "rubyLsp.useBundler": true,
+  "rubyLsp.rubocop": {
+    "useBundler": true
+  },
+  "rubyLsp.formatter": "rubocop",
+  "rubyLsp.diagnostics": {
+    "rubocop": {
+      "enabled": true,
+      "useBundler": true
+    }
+  }
+} 

@@ -1,0 +1,237 @@
+<% content_for :title, @menu.name %>
+
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-dark mb-3">📋 <%= @menu.name %></h1>
+      <p class="lead text-muted">Menu details and recipe collection</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <!-- Menu Description -->
+        <% if @menu.description.present? %>
+          <div class="card shadow-lg border-0 mb-4">
+            <div class="card-body">
+              <h2 class="h4 fw-bold text-dark mb-3 d-flex align-items-center">
+                <i class="bi bi-journal-text me-2 text-primary"></i>
+                Description
+              </h2>
+              <div class="prose">
+                <%= @menu.description %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Menu Recipes -->
+        <% if @menu.recipes.any? %>
+          <div class="card shadow-lg border-0">
+            <div class="card-body">
+              <h2 class="h4 fw-bold text-dark mb-4 d-flex align-items-center">
+                <i class="bi bi-journal-check me-2 text-primary"></i>
+                Menu Recipes
+              </h2>
+              
+              <div class="space-y-4">
+                <% @menu.recipes.each_with_index do |recipe, index| %>
+                  <div class="card border mb-3">
+                    <div class="card-body">
+                      <div class="d-flex align-items-start gap-3">
+                        <!-- Recipe Number -->
+                        <div class="flex-shrink-0 bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px;">
+                          <%= index + 1 %>
+                        </div>
+                        
+                        <!-- Recipe Content -->
+                        <div class="flex-grow-1">
+                          <div class="d-flex align-items-start justify-content-between mb-3">
+                            <h3 class="h5 fw-bold text-dark mb-0"><%= recipe.name %></h3>
+                            <%= link_to "View Recipe", recipe_path(recipe), class: "text-primary text-decoration-none fw-medium small" %>
+                          </div>
+                          
+                          <!-- Recipe Badges -->
+                          <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-warning text-dark">
+                              <%= recipe.cuisine %>
+                            </span>
+                            <span class="badge bg-info text-dark">
+                              <%= recipe.difficulty %>
+                            </span>
+                            <% if recipe.occasion.present? %>
+                              <span class="badge bg-purple bg-opacity-10 text-purple">
+                                <%= recipe.occasion %>
+                              </span>
+                            <% end %>
+                          </div>
+                          
+                          <!-- Recipe Details -->
+                          <div class="row g-3 text-muted small">
+                            <% if recipe.prep_time.present? %>
+                              <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                  <i class="bi bi-clock me-2"></i>
+                                  Prep: <%= recipe.prep_time %> min
+                                </div>
+                              </div>
+                            <% end %>
+                            <% if recipe.cook_time.present? %>
+                              <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                  <i class="bi bi-fire me-2"></i>
+                                  Cook: <%= recipe.cook_time %> min
+                                </div>
+                              </div>
+                            <% end %>
+                            <% if recipe.servings.present? %>
+                              <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                  <i class="bi bi-people me-2"></i>
+                                  Serves: <%= recipe.servings %>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <div class="card shadow-lg border-0 text-center">
+            <div class="card-body py-5">
+              <div class="display-1 mb-4">🍽️</div>
+              <h3 class="h4 fw-bold text-dark mb-2">No recipes added yet</h3>
+              <p class="text-muted mb-4">This menu doesn't have any recipes yet. Add some recipes to get started!</p>
+              <%= link_to "Add Recipes", edit_menu_path(@menu), class: "btn btn-success" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Menu Image -->
+        <div class="card shadow-lg border-0 mb-4">
+          <div class="card-body">
+            <% if @menu.image.attached? %>
+              <%= image_tag @menu.image, class: "img-fluid rounded mb-3" %>
+            <% else %>
+              <div class="bg-gradient-primary rounded d-flex align-items-center justify-content-center mb-3" style="height: 256px;">
+                <span class="display-1">
+                  <%=
+                    case @menu.occasion
+                    when "Weeknight Dinner"
+                      "🍽️"
+                    when "Weekend Brunch"
+                      "🥞"
+                    when "Holiday Feast"
+                      "🎄"
+                    when "Date Night"
+                      "💕"
+                    when "Family Gathering"
+                      "👨‍👩‍👧‍👦"
+                    when "Party"
+                      "🎉"
+                    when "Picnic"
+                      "🧺"
+                    when "BBQ"
+                      "🍖"
+                    when "Birthday"
+                      "🎂"
+                    when "Anniversary"
+                      "💍"
+                    when "Thanksgiving"
+                      "🦃"
+                    when "Christmas"
+                      "🎅"
+                    when "Easter"
+                      "🐰"
+                    when "Valentine's Day"
+                      "💝"
+                    when "New Year's"
+                      "🎆"
+                    when "Summer Cookout"
+                      "☀️"
+                    when "Winter Comfort"
+                      "❄️"
+                    when "Spring Fresh"
+                      "🌸"
+                    when "Autumn Harvest"
+                      "🍂"
+                    else
+                      "📋"
+                    end
+                  %>
+                </span>
+              </div>
+            <% end %>
+            
+            <h3 class="h5 fw-bold text-dark mb-3">Menu Details</h3>
+            <div class="space-y-2 text-muted small">
+              <div class="d-flex justify-content-between">
+                <span>Occasion:</span>
+                <span class="fw-medium text-dark"><%= @menu.occasion %></span>
+              </div>
+              <% if @menu.cuisine.present? %>
+                <div class="d-flex justify-content-between">
+                  <span>Cuisine:</span>
+                  <span class="fw-medium text-dark"><%= @menu.cuisine %></span>
+                </div>
+              <% end %>
+              <% if @menu.servings.present? %>
+                <div class="d-flex justify-content-between">
+                  <span>Servings:</span>
+                  <span class="fw-medium text-dark"><%= @menu.servings %></span>
+                </div>
+              <% end %>
+              <div class="d-flex justify-content-between">
+                <span>Recipes:</span>
+                <span class="fw-medium text-dark"><%= @menu.recipes.count %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card shadow-lg border-0">
+          <div class="card-body">
+            <h3 class="h5 fw-bold text-dark mb-3">Quick Actions</h3>
+            <div class="d-grid gap-2">
+              <%= link_to "Edit Menu", edit_menu_path(@menu), class: "btn btn-success" %>
+              <%= link_to "Delete Menu", @menu, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
+              <%= link_to "Print Menu", "#", onclick: "window.print(); return false;", class: "btn btn-outline-secondary" %>
+              <%= link_to "Share Menu", "#", id: "share-menu-btn", class: "btn btn-outline-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('turbo:load', function() {
+  var shareBtn = document.getElementById('share-menu-btn');
+  if (shareBtn) {
+    shareBtn.onclick = function(e) {
+      e.preventDefault();
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: 'Check out this menu!',
+          url: window.location.href
+        });
+      } else {
+        prompt('Copy this link to share:', window.location.href);
+      }
+      return false;
+    };
+  }
+});
+</script> 

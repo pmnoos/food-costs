@@ -1,0 +1,19 @@
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-5">
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="display-4 fw-bold text-dark mb-3">✨ Add New Recipe</h1>
+      <p class="lead text-muted">Share your culinary masterpiece with the world</p>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="mb-4">
+      <%= link_to recipes_path, class: "text-warning text-decoration-none fw-medium d-flex align-items-center" do %>
+        <i class="bi bi-arrow-left me-2"></i>
+        Back to Recipes
+      <% end %>
+    </div>
+
+    <%= render 'form', recipe: @recipe %>
+  </div>
+</div> 

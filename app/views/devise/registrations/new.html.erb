@@ -1,0 +1,61 @@
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-dark mb-3">🌟 Join Us</h1>
+      <p class="lead text-muted">Create your account and start managing your food costs</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0" style="border-radius: 20px; border: 2px solid var(--pastel-primary);">
+          <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #f7cac9 0%, #ffdab9 100%); border-radius: 18px 18px 0 0; border-bottom: 2px solid var(--pastel-primary);">
+            <h2 class="mb-0 text-dark fw-bold">
+              <i class="bi bi-person-plus me-2"></i>
+              Sign up
+            </h2>
+          </div>
+          <div class="card-body p-4">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
+
+              <div class="mb-4">
+                <%= f.label :email, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-envelope me-2" style="color: var(--pastel-primary);"></i>
+                  Email Address
+                <% end %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+
+              <div class="mb-4">
+                <%= f.label :password, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-lock me-2" style="color: var(--pastel-primary);"></i>
+                  Password
+                  <% if @minimum_password_length %>
+                    <span class="text-muted small ms-2">(<%= @minimum_password_length %> characters minimum)</span>
+                  <% end %>
+                <% end %>
+                <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Create a password", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+
+              <div class="mb-4">
+                <%= f.label :password_confirmation, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-shield-check me-2" style="color: var(--pastel-primary);"></i>
+                  Confirm Password
+                <% end %>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your password", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+
+              <div class="d-grid gap-2 mt-5">
+                <%= f.submit "Sign up", class: "btn px-4 py-3 fw-medium", style: "background: linear-gradient(45deg, var(--pastel-secondary), var(--pastel-warm)); border: none; border-radius: 25px; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);" %>
+              </div>
+            <% end %>
+            <div class="mt-4 text-center">
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

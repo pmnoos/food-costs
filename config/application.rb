@@ -23,5 +23,14 @@ module FoodCosts
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    
+    # Disable Action Text's default CSS loading since we're using our own embedded styles
+    config.action_text.content_asset_paths = []
+    
+    # Disable Action Text's default asset loading
+    config.action_text.asset_paths = []
+    
+    # Ensure Action Text doesn't try to load its default CSS
+    config.assets.paths.delete_if { |path| path.to_s.include?('actiontext') }
   end
 end

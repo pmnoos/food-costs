@@ -1,0 +1,112 @@
+<%= form_with model: recipe, local: true, class: "card" do |form| %>
+  <div class="card-body">
+    <% if recipe.errors.any? %>
+      <div class="alert alert-danger">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <svg class="fs-4 text-danger" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="ms-3">
+            <h6 class="alert-heading">
+              <%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:
+            </h6>
+            <ul class="mb-0">
+              <% recipe.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control", placeholder: "e.g., Spaghetti Carbonara" %>
+      </div>
+
+      <div class="col-md-6">
+        <%= form.label :cuisine, class: "form-label" %>
+        <%= form.select :cuisine, 
+            options_for_select([
+              ['Italian', 'Italian'],
+              ['Mexican', 'Mexican'],
+              ['Asian', 'Asian'],
+              ['American', 'American'],
+              ['Mediterranean', 'Mediterranean'],
+              ['Indian', 'Indian'],
+              ['French', 'French'],
+              ['Other', 'Other']
+            ], recipe.cuisine), 
+            { prompt: "Select cuisine" }, 
+            { class: "form-select" } %>
+      </div>
+
+      <div class="col-md-4">
+        <%= form.label :difficulty, class: "form-label" %>
+        <%= form.select :difficulty, 
+            options_for_select([
+              ['Easy', 'Easy'],
+              ['Medium', 'Medium'],
+              ['Hard', 'Hard']
+            ], recipe.difficulty), 
+            { prompt: "Select difficulty" }, 
+            { class: "form-select" } %>
+      </div>
+
+      <div class="col-md-4">
+        <%= form.label :prep_time, "Prep Time (minutes)", class: "form-label" %>
+        <%= form.number_field :prep_time, class: "form-control", placeholder: "30" %>
+      </div>
+
+      <div class="col-md-4">
+        <%= form.label :cook_time, "Cook Time (minutes)", class: "form-label" %>
+        <%= form.number_field :cook_time, class: "form-control", placeholder: "45" %>
+      </div>
+
+      <div class="col-md-6">
+        <%= form.label :servings, class: "form-label" %>
+        <%= form.number_field :servings, class: "form-control", placeholder: "4" %>
+      </div>
+
+      <div class="col-md-6">
+        <%= form.label :occasion, class: "form-label" %>
+        <%= form.select :occasion, 
+            options_for_select([
+              ['Weeknight Dinner', 'Weeknight Dinner'],
+              ['Weekend Brunch', 'Weekend Brunch'],
+              ['Holiday Feast', 'Holiday Feast'],
+              ['Quick Lunch', 'Quick Lunch'],
+              ['Party Appetizer', 'Party Appetizer'],
+              ['Dessert', 'Dessert'],
+              ['Other', 'Other']
+            ], recipe.occasion), 
+            { prompt: "Select occasion (optional)" }, 
+            { class: "form-select" } %>
+      </div>
+
+      <div class="col-12">
+        <%= form.label :ingredients, class: "form-label" %>
+        <%= form.rich_text_area :ingredients, class: "form-control tinymce", placeholder: "List all ingredients with quantities..." %>
+      </div>
+
+      <div class="col-12">
+        <%= form.label :instructions, class: "form-label" %>
+        <%= form.rich_text_area :instructions, class: "form-control tinymce", placeholder: "Step-by-step cooking instructions..." %>
+      </div>
+
+      <div class="col-12">
+        <%= form.label :notes, class: "form-label" %>
+        <%= form.text_area :notes, class: "form-control", rows: 3, placeholder: "Any additional notes, tips, or variations..." %>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+      <%= form.submit class: "btn btn-primary" %>
+      <%= link_to "Cancel", recipes_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+<% end %> 

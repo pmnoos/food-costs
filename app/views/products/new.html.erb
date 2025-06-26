@@ -1,9 +1,13 @@
-<% content_for :title, "New product" %>
+<% content_for :title, "New Product" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New product</h1>
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-dark mb-3">🛒 Add New Product</h1>
+      <p class="lead text-muted">Track your grocery purchase and manage costs</p>
+    </div>
 
-  <%= render "form", product: @product %>
-
-  <%= link_to "Back to products", products_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+    <%= render "form", product: @product %>
+  </div>
 </div>

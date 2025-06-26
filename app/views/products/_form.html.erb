@@ -1,137 +1,148 @@
-<div class="max-w-2xl mx-auto">
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-    <div class="px-6 py-4 border-b border-gray-200">
-      <h2 class="text-lg font-medium text-gray-900">
-        <%= product.new_record? ? "Add New Product" : "Edit Product" %>
-      </h2>
-      <p class="mt-1 text-sm text-gray-500">
-        <%= product.new_record? ? "Enter the details of your grocery purchase. After saving, you'll be able to add another product." : "Update the product information" %>
-      </p>
-    </div>
+<div class="row justify-content-center">
+  <div class="col-lg-8 col-xl-6">
+    <div class="card shadow-lg border-0" style="border-radius: 20px; border: 2px solid var(--pastel-primary);">
+      <div class="card-header text-white py-4" style="background: linear-gradient(135deg, #b0e0e6 0%, #e6e6fa 100%); border-radius: 18px 18px 0 0; border-bottom: 2px solid var(--pastel-primary);">
+        <h5 class="mb-0 d-flex align-items-center text-dark fw-bold">
+          <i class="bi bi-basket me-3 fs-4"></i>
+          <%= product.new_record? ? "Add New Product" : "Edit Product" %>
+        </h5>
+        <p class="text-dark opacity-75 mb-0 mt-2">
+          <%= product.new_record? ? "Enter the details of your grocery purchase. After saving, you'll be able to add another product." : "Update the product information" %>
+        </p>
+      </div>
 
-    <%= form_with(model: product, class: "space-y-6") do |form| %>
-      <% if product.errors.any? %>
-        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-          <h2 class="text-sm font-medium text-red-800">
-            <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
-          </h2>
-          <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
-            <% product.errors.each do |error| %>
-              <li><%= error.full_message %></li>
+      <%= form_with(model: product, class: "card-body p-4") do |form| %>
+        <% if product.errors.any? %>
+          <div class="alert alert-danger border-0 shadow-sm mb-4" style="border-radius: 15px; background: linear-gradient(45deg, var(--pastel-orange), var(--pastel-warm)); border: 2px solid var(--pastel-orange);">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-exclamation-triangle-fill me-3 fs-4 text-dark"></i>
+              <div>
+                <h6 class="alert-heading mb-2 text-dark fw-bold">
+                  <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
+                </h6>
+                <ul class="mb-0 ps-3 small text-dark">
+                  <% product.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="d-flex flex-column gap-4">
+          <div class="form-group">
+            <%= form.label :name, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+              <i class="bi bi-tag me-2" style="color: var(--pastel-primary);"></i>
+              Product Name
             <% end %>
-          </ul>
+            <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "e.g., Organic Bananas", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :store_id, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+              <i class="bi bi-shop me-2" style="color: var(--pastel-primary);"></i>
+              Store
+            <% end %>
+            <%= form.collection_select :store_id, Store.all, :id, :name, { prompt: "Select a store" }, { class: "form-select form-select-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" } %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :purchase_date, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+              <i class="bi bi-calendar me-2" style="color: var(--pastel-primary);"></i>
+              Purchase Date
+            <% end %>
+            <%= form.date_field :purchase_date, class: "form-control form-control-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :unit, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-rulers me-2" style="color: var(--pastel-primary);"></i>
+                  Unit
+                <% end %>
+                <%= form.select :unit, 
+                    options_for_select([
+                      ['Pound (lb)', 'lb'],
+                      ['Kilogram (kg)', 'kg'],
+                      ['Ounce (oz)', 'oz'],
+                      ['Gram (g)', 'g'],
+                      ['Piece (pc)', 'pc'],
+                      ['Pack (pk)', 'pk'],
+                      ['Bottle (btl)', 'btl'],
+                      ['Can (can)', 'can'],
+                      ['Box (box)', 'box'],
+                      ['Bag (bag)', 'bag'],
+                      ['Other', 'other']
+                    ], product.unit), 
+                    { prompt: "Select unit" }, 
+                    { class: "form-select form-select-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" } %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :quantity, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-hash me-2" style="color: var(--pastel-primary);"></i>
+                  Quantity
+                <% end %>
+                <%= form.number_field :quantity, class: "form-control form-control-lg", step: "0.01", placeholder: "1.0", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :unit_price, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-currency-dollar me-2" style="color: var(--pastel-primary);"></i>
+                  Unit Price
+                <% end %>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text" style="border-radius: 8px 0 0 8px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255, 255, 255, 0.9);">
+                    <i class="bi bi-currency-dollar text-muted"></i>
+                  </span>
+                  <%= form.number_field :unit_price, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 8px 8px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255, 255, 255, 0.8);" %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= form.label :total_cost, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-calculator me-2" style="color: var(--pastel-primary);"></i>
+                  Total Cost
+                <% end %>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text" style="border-radius: 8px 0 0 8px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255, 255, 255, 0.9);">
+                    <i class="bi bi-currency-dollar text-muted"></i>
+                  </span>
+                  <%= form.number_field :total_cost, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 8px 8px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255, 255, 255, 0.8);" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-3 mt-5 pt-4 border-top" style="border-color: var(--pastel-primary) !important;">
+          <%= form.submit class: "btn px-4 py-2 fw-medium", style: "background: linear-gradient(45deg, var(--pastel-primary), var(--pastel-accent)); border: none; border-radius: 25px; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);" do %>
+            <i class="bi bi-check-circle me-2"></i>
+            <%= product.new_record? ? "Create Product" : "Update Product" %>
+          <% end %>
+          <%= link_to products_path, class: "btn btn-outline-secondary px-4 py-2 fw-medium", style: "border-radius: 25px; border-color: var(--pastel-primary); color: var(--text-dark);" do %>
+            <i class="bi bi-arrow-left me-2"></i>
+            Cancel
+          <% end %>
         </div>
       <% end %>
-
-      <div class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Product Name
-            </label>
-            <%= form.text_field :name, 
-                placeholder: "e.g., Organic Bananas", 
-                class: ["block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                        {"border-gray-300": product.errors[:name].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:name].any?}] %>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Purchase Date
-            </label>
-            <%= form.date_field :purchase_date, 
-                class: ["block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                        {"border-gray-300": product.errors[:purchase_date].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:purchase_date].any?}] %>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Store
-            </label>
-            <%= form.collection_select :store_id, Store.all, :id, :name, 
-                { prompt: "Select a store" }, 
-                class: ["block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                        {"border-gray-300": product.errors[:store_id].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:store_id].any?}] %>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Unit
-            </label>
-            <%= form.text_field :unit, 
-                placeholder: "e.g., kg, pkt, each", 
-                class: ["block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                        {"border-gray-300": product.errors[:unit].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:unit].any?}] %>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Quantity
-            </label>
-            <%= form.number_field :quantity, 
-                step: "0.01", 
-                min: "0", 
-                placeholder: "1.0", 
-                class: ["block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                        {"border-gray-300": product.errors[:quantity].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:quantity].any?}], 
-                id: "quantity_field" %>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Unit Price
-            </label>
-            <div class="relative">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span class="text-gray-500 text-sm">$</span>
-              </div>
-              <%= form.number_field :unit_price, 
-                  step: "0.01", 
-                  placeholder: "0.00", 
-                  class: ["block w-full rounded-lg border pl-8 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", 
-                          {"border-gray-300": product.errors[:unit_price].none?, "border-red-300 focus:ring-red-500 focus:border-red-500": product.errors[:unit_price].any?}], 
-                  id: "unit_price_field" %>
-            </div>
-            <p class="mt-1 text-xs text-gray-500">Use negative values for vouchers/discounts (e.g., -20.00)</p>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Total Cost
-            </label>
-            <div class="relative">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span class="text-gray-500 text-sm">$</span>
-              </div>
-              <%= form.number_field :total_cost, 
-                  step: "0.01", 
-                  class: ["block w-full rounded-lg border pl-8 pr-3 py-2 text-sm bg-gray-50 text-gray-900", 
-                          {"border-gray-300": product.errors[:total_cost].none?, "border-red-300": product.errors[:total_cost].any?}], 
-                  id: "total_cost_field", 
-                  readonly: true %>
-            </div>
-            <p class="mt-1 text-xs text-gray-500">Calculated automatically (negative for vouchers/discounts)</p>
-          </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 border-t border-gray-200">
-          <%= form.submit class: "w-full sm:w-auto rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium cursor-pointer transition-colors duration-200 text-sm sm:text-base" %>
-          <%= link_to "Done", products_path, class: "w-full sm:w-auto text-center rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium transition-colors duration-200 text-sm sm:text-base" %>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const unitPriceField = document.getElementById('unit_price_field');
-  const quantityField = document.getElementById('quantity_field');
-  const totalCostField = document.getElementById('total_cost_field');
+  const unitPriceField = document.querySelector('input[name="product[unit_price]"]');
+  const quantityField = document.querySelector('input[name="product[quantity]"]');
+  const totalCostField = document.querySelector('input[name="product[total_cost]"]');
 
   function calculateTotalCost() {
     const unitPrice = parseFloat(unitPriceField.value) || 0;
@@ -143,19 +154,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update the field color based on whether it's positive or negative
     if (totalCost < 0) {
-      totalCostField.classList.add('text-red-600', 'font-semibold');
-      totalCostField.classList.remove('text-gray-900');
+      totalCostField.style.color = '#dc3545';
+      totalCostField.style.fontWeight = 'bold';
     } else {
-      totalCostField.classList.remove('text-red-600', 'font-semibold');
-      totalCostField.classList.add('text-gray-900');
+      totalCostField.style.color = 'var(--text-dark)';
+      totalCostField.style.fontWeight = 'normal';
     }
   }
 
   // Calculate on input change
-  unitPriceField.addEventListener('input', calculateTotalCost);
-  quantityField.addEventListener('input', calculateTotalCost);
+  if (unitPriceField && quantityField && totalCostField) {
+    unitPriceField.addEventListener('input', calculateTotalCost);
+    quantityField.addEventListener('input', calculateTotalCost);
 
-  // Calculate on page load if values exist
-  calculateTotalCost();
+    // Calculate on page load if values exist
+    calculateTotalCost();
+  }
 });
 </script>

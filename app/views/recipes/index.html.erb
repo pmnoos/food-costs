@@ -1,0 +1,196 @@
+<% content_for :title, "Recipes" %>
+
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-2">
+    <!-- Header -->
+    <div class="text-center mb-3">
+      <h1 class="display-5 fw-bold text-dark mb-2">👨‍🍳 Recipe Collection</h1>
+      <p class="lead text-muted">Discover, create, and organize your favorite recipes</p>
+    </div>
+
+    <!-- Add Recipe Button -->
+    <div class="mb-3 d-flex justify-content-end">
+      <%= link_to "Add New Recipe", new_recipe_path, class: "btn btn-warning btn-lg px-4 py-2 fw-medium shadow" %>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="card shadow-lg mb-4">
+      <div class="card-body p-4">
+        <%= form_with url: recipes_path, method: :get, local: true do |form| %>
+          <div class="row g-3">
+          <!-- Search -->
+            <div class="col-md-6 col-lg-3">
+              <%= form.label :search, "Search Recipes", class: "form-label fw-medium text-dark mb-2" %>
+              <%= form.text_field :search, value: params[:search], placeholder: "Recipe name...", class: "form-control" %>
+          </div>
+
+          <!-- Cuisine Filter -->
+            <div class="col-md-6 col-lg-3">
+              <%= form.label :cuisine, "Cuisine", class: "form-label fw-medium text-dark mb-2" %>
+              <%= form.select :cuisine, options_for_select([["All Cuisines", ""]] + @cuisines.map { |c| [c, c] }, params[:cuisine]), {}, class: "form-select" %>
+          </div>
+
+          <!-- Difficulty Filter -->
+            <div class="col-md-6 col-lg-3">
+              <%= form.label :difficulty, "Difficulty", class: "form-label fw-medium text-dark mb-2" %>
+              <%= form.select :difficulty, options_for_select([["All Levels", ""]] + @difficulties.map { |d| [d, d] }, params[:difficulty]), {}, class: "form-select" %>
+          </div>
+
+          <!-- Occasion Filter -->
+            <div class="col-md-6 col-lg-3">
+              <%= form.label :occasion, "Occasion", class: "form-label fw-medium text-dark mb-2" %>
+              <%= form.select :occasion, options_for_select([["All Occasions", ""]] + @occasions.map { |o| [o, o] }, params[:occasion]), {}, class: "form-select" %>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <div>
+              <%= form.submit "Search", class: "btn btn-primary me-2" %>
+              <%= link_to "Clear", recipes_path, class: "btn btn-outline-secondary" %>
+            </div>
+            <small class="text-muted">
+              <%= pluralize(@recipes.count, "recipe") %> found
+            </small>
+        </div>
+      <% end %>
+    </div>
+    </div>
+
+    <!-- Recipes Grid -->
+    <div class="row g-4">
+      <% @recipes.each do |recipe| %>
+        <div class="col-md-4 col-lg-3 col-xl-2">
+          <div class="card h-100 shadow-lg border-0 hover-shadow">
+            <!-- Recipe Header -->
+            <div class="card-img-top bg-gradient-warning d-flex align-items-center justify-content-center position-relative" style="height: 150px; background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
+              <span class="display-4">
+                <%=
+                  case recipe.cuisine
+                  when "Italian"
+                    "🍝"
+                  when "Mexican"
+                    "🌮"
+                  when "Asian"
+                    "🍜"
+                  when "American"
+                    "🍔"
+                  when "Mediterranean"
+                    "🥗"
+                  when "Indian"
+                    "🍛"
+                  when "French"
+                    "🥐"
+                  when "Thai"
+                    "🍲"
+                  when "Japanese"
+                    "🍱"
+                  when "Greek"
+                    "🥙"
+                  when "Spanish"
+                    "🥘"
+                  when "Moroccan"
+                    "🫕"
+                  when "Vietnamese"
+                    "🍜"
+                  when "Korean"
+                    "🍲"
+                  when "Lebanese"
+                    "🥙"
+                  when "Turkish"
+                    "🥘"
+                  when "Ethiopian"
+                    "🍛"
+                  when "Caribbean"
+                    "🍹"
+                  when "African"
+                    "🍲"
+                  else
+                    "👨‍🍳"
+                  end
+                %>
+              </span>
+              
+              <!-- Difficulty Badge -->
+              <div class="position-absolute top-0 end-0 m-2">
+                <% difficulty_color = case recipe.difficulty
+                   when "Easy"
+                     "success"
+                   when "Medium"
+                     "warning"
+                   when "Hard"
+                     "danger"
+                   else
+                     "secondary"
+                   end %>
+                <span class="badge bg-<%= difficulty_color %>-subtle text-<%= difficulty_color %>-emphasis">
+                  <%= recipe.difficulty %>
+                </span>
+              </div>
+            </div>
+
+            <!-- Recipe Content -->
+            <div class="card-body d-flex flex-column p-3">
+              <div class="mb-2">
+                <h6 class="card-title fw-bold text-dark mb-2"><%= recipe.name %></h6>
+                
+                <!-- Badges -->
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                  <span class="badge bg-warning-subtle text-warning-emphasis small">
+              <%= recipe.cuisine %>
+            </span>
+                  <span class="badge bg-primary-subtle text-primary-emphasis small">
+                    <%= recipe.difficulty %>
+                  </span>
+                  <% if recipe.occasion.present? %>
+                    <span class="badge bg-info-subtle text-info-emphasis small">
+                      <%= recipe.occasion %>
+                    </span>
+                  <% end %>
+          </div>
+
+                <!-- Recipe Description -->
+                <% if recipe.instructions.present? %>
+                  <p class="card-text text-muted small">
+                    <%= truncate(recipe.instructions, length: 80) %>
+                  </p>
+                <% end %>
+
+                <!-- Cooking Times -->
+                <div class="d-flex gap-2 text-muted small mb-2">
+              <% if recipe.prep_time.present? %>
+                    <span class="d-flex align-items-center">
+                      <i class="bi bi-clock me-1"></i>
+                      Prep: <%= recipe.prep_time %>min
+                    </span>
+              <% end %>
+                  <% if recipe.cook_time.present? %>
+                    <span class="d-flex align-items-center">
+                      <i class="bi bi-fire me-1"></i>
+                      Cook: <%= recipe.cook_time %>min
+                    </span>
+              <% end %>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-auto d-flex gap-1">
+                <%= link_to "View", recipe_path(recipe), class: "btn btn-outline-warning btn-sm flex-fill" %>
+                <%= link_to "Edit", edit_recipe_path(recipe), class: "btn btn-outline-secondary btn-sm" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Empty State -->
+    <% if @recipes.empty? %>
+      <div class="text-center py-5">
+        <div class="display-1 text-muted mb-3">👨‍🍳</div>
+        <h3 class="fw-bold text-dark mb-3">No recipes found</h3>
+        <p class="text-muted mb-4">Create your first recipe to get started!</p>
+        <%= link_to "Add New Recipe", new_recipe_path, class: "btn btn-warning btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div> 

@@ -1,0 +1,144 @@
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center mb-5">
+        <i class="bi bi-gear fs-1 mb-3" style="color: var(--pastel-primary);"></i>
+        <h1 class="fw-bold" style="color: var(--text-dark);">Settings</h1>
+        <p class="text-muted fs-5">Manage your account preferences and settings</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Account Settings -->
+    <div class="col-lg-6">
+      <div class="card shadow-lg border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 230, 0.9)); backdrop-filter: blur(10px); border: 2px solid var(--pastel-primary);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-person-circle fs-2 me-3" style="color: var(--pastel-primary);"></i>
+            <h3 class="fw-bold mb-0" style="color: var(--text-dark);">Account Settings</h3>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-medium" style="color: var(--text-dark);">
+              <i class="bi bi-envelope me-2" style="color: var(--pastel-primary);"></i>
+              Email Address
+            </label>
+            <input type="email" class="form-control" value="<%= current_user.email %>" readonly style="border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8); color: var(--text-dark);">
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-medium" style="color: var(--text-dark);">
+              <i class="bi bi-calendar me-2" style="color: var(--pastel-primary);"></i>
+              Member Since
+            </label>
+            <input type="text" class="form-control" value="<%= current_user.created_at.strftime('%B %d, %Y') %>" readonly style="border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8); color: var(--text-dark);">
+          </div>
+          
+          <div class="d-grid gap-2">
+            <%= link_to edit_user_registration_path, class: "btn btn-primary fw-medium", style: "border-radius: 15px; background: linear-gradient(45deg, var(--pastel-primary), var(--pastel-accent)); border: none; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);" do %>
+              <i class="bi bi-pencil me-2"></i>
+              Edit Profile
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="col-lg-6">
+      <div class="card shadow-lg border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 230, 0.9)); backdrop-filter: blur(10px); border: 2px solid var(--pastel-secondary);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-sliders fs-2 me-3" style="color: var(--pastel-secondary);"></i>
+            <h3 class="fw-bold mb-0" style="color: var(--text-dark);">Preferences</h3>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-medium" style="color: var(--text-dark);">
+              <i class="bi bi-bell me-2" style="color: var(--pastel-secondary);"></i>
+              Email Notifications
+            </label>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="emailNotifications" checked style="background-color: var(--pastel-secondary); border-color: var(--pastel-secondary);">
+              <label class="form-check-label" for="emailNotifications" style="color: var(--text-dark);">
+                Receive email updates about your food costs
+              </label>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-medium" style="color: var(--text-dark);">
+              <i class="bi bi-palette me-2" style="color: var(--pastel-secondary);"></i>
+              Theme Preference
+            </label>
+            <select class="form-select" style="border-radius: 15px; border: 2px solid var(--pastel-secondary); background: rgba(255, 255, 255, 0.8); color: var(--text-dark);">
+              <option value="pastel" selected>Pastel Theme (Current)</option>
+              <option value="light">Light Theme</option>
+              <option value="dark">Dark Theme</option>
+            </select>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary fw-medium" style="border-radius: 15px; background: linear-gradient(45deg, var(--pastel-secondary), var(--pastel-warm)); border: none; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);">
+              <i class="bi bi-check-circle me-2"></i>
+              Save Preferences
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="col-lg-6">
+      <div class="card shadow-lg border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 230, 0.9)); backdrop-filter: blur(10px); border: 2px solid var(--pastel-cool);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-database fs-2 me-3" style="color: var(--pastel-cool);"></i>
+            <h3 class="fw-bold mb-0" style="color: var(--text-dark);">Data Management</h3>
+          </div>
+          
+          <div class="mb-4">
+            <p class="text-muted mb-3">Manage your food cost data and exports</p>
+            <div class="d-grid gap-2">
+              <button class="btn btn-outline-primary fw-medium" style="border-radius: 15px; border: 2px solid var(--pastel-cool); color: var(--text-dark);">
+                <i class="bi bi-download me-2"></i>
+                Export Data
+              </button>
+              <button class="btn btn-outline-primary fw-medium" style="border-radius: 15px; border: 2px solid var(--pastel-cool); color: var(--text-dark);">
+                <i class="bi bi-upload me-2"></i>
+                Import Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div class="col-lg-6">
+      <div class="card shadow-lg border-0 h-100" style="border-radius: 20px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 230, 0.9)); backdrop-filter: blur(10px); border: 2px solid var(--pastel-accent);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-shield-lock fs-2 me-3" style="color: var(--pastel-accent);"></i>
+            <h3 class="fw-bold mb-0" style="color: var(--text-dark);">Security</h3>
+          </div>
+          
+          <div class="mb-4">
+            <p class="text-muted mb-3">Manage your account security settings</p>
+            <div class="d-grid gap-2">
+              <%= link_to new_user_password_path, class: "btn btn-outline-primary fw-medium", style: "border-radius: 15px; border: 2px solid var(--pastel-accent); color: var(--text-dark);" do %>
+                <i class="bi bi-key me-2"></i>
+                Change Password
+              <% end %>
+              <button class="btn btn-outline-warning fw-medium" style="border-radius: 15px; border: 2px solid var(--pastel-orange); color: var(--text-dark);">
+                <i class="bi bi-trash me-2"></i>
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

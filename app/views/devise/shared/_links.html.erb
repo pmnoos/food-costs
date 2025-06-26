@@ -1,0 +1,45 @@
+<div class="d-flex flex-column gap-2">
+  <%- if controller_name != 'sessions' %>
+    <%= link_to new_session_path(resource_name), class: "btn btn-outline-primary btn-sm", style: "border-radius: 20px; border-color: var(--pastel-primary); color: var(--text-dark);" do %>
+      <i class="bi bi-box-arrow-in-right me-2"></i>
+      Log in
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to new_registration_path(resource_name), class: "btn btn-outline-secondary btn-sm", style: "border-radius: 20px; border-color: var(--pastel-secondary); color: var(--text-dark);" do %>
+      <i class="bi bi-person-plus me-2"></i>
+      Sign up
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to new_password_path(resource_name), class: "btn btn-outline-info btn-sm", style: "border-radius: 20px; border-color: var(--pastel-cool); color: var(--text-dark);" do %>
+      <i class="bi bi-question-circle me-2"></i>
+      Forgot your password?
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <%= link_to new_confirmation_path(resource_name), class: "btn btn-outline-warning btn-sm", style: "border-radius: 20px; border-color: var(--pastel-yellow); color: var(--text-dark);" do %>
+      <i class="bi bi-envelope-check me-2"></i>
+      Didn't receive confirmation instructions?
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <%= link_to new_unlock_path(resource_name), class: "btn btn-outline-danger btn-sm", style: "border-radius: 20px; border-color: var(--pastel-orange); color: var(--text-dark);" do %>
+      <i class="bi bi-unlock me-2"></i>
+      Didn't receive unlock instructions?
+    <% end %>
+  <% end %>
+
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <%= button_to omniauth_authorize_path(resource_name, provider), class: "btn btn-outline-dark btn-sm", style: "border-radius: 20px; border-color: var(--text-muted); color: var(--text-dark);", data: { turbo: false } do %>
+        <i class="bi bi-google me-2"></i>
+        Sign in with <%= OmniAuth::Utils.camelize(provider) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

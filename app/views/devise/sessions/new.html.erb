@@ -1,0 +1,55 @@
+<div class="min-vh-100 bg-light">
+  <div class="container-fluid py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-dark mb-3">🔐 Welcome Back</h1>
+      <p class="lead text-muted">Sign in to access your Food Costs Manager</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0" style="border-radius: 20px; border: 2px solid var(--pastel-primary);">
+          <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #a8d5ba 0%, #b8e6b8 100%); border-radius: 18px 18px 0 0; border-bottom: 2px solid var(--pastel-primary);">
+            <h2 class="mb-0 text-dark fw-bold">
+              <i class="bi bi-box-arrow-in-right me-2"></i>
+              Log in
+            </h2>
+          </div>
+          <div class="card-body p-4">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="mb-4">
+                <%= f.label :email, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-envelope me-2" style="color: var(--pastel-primary);"></i>
+                  Email Address
+                <% end %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+
+              <div class="mb-4">
+                <%= f.label :password, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
+                  <i class="bi bi-lock me-2" style="color: var(--pastel-primary);"></i>
+                  Password
+                <% end %>
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Enter your password", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+              </div>
+
+              <% if devise_mapping.rememberable? %>
+                <div class="form-check mb-4">
+                  <%= f.check_box :remember_me, class: "form-check-input", style: "border: 2px solid var(--pastel-primary);" %>
+                  <%= f.label :remember_me, class: "form-check-label text-dark fw-medium" %>
+                </div>
+              <% end %>
+
+              <div class="d-grid gap-2 mt-5">
+                <%= f.submit "Log in", class: "btn px-4 py-3 fw-medium", style: "background: linear-gradient(45deg, var(--pastel-primary), var(--pastel-accent)); border: none; border-radius: 25px; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);" %>
+              </div>
+            <% end %>
+            <div class="mt-4 text-center">
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

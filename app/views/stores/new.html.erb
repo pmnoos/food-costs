@@ -1,9 +1,26 @@
 <% content_for :title, "New store" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New store</h1>
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, var(--pastel-bg), var(--pastel-light)); min-height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3" style="color: var(--text-dark); background: linear-gradient(45deg, var(--pastel-primary), var(--pastel-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          <i class="bi bi-shop me-3" style="color: var(--pastel-primary);"></i>
+          Add New Store
+        </h1>
+        <p class="lead opacity-75" style="color: var(--text-dark);">
+          Create a new store to track your grocery purchases
+        </p>
+      </div>
 
-  <%= render "form", store: @store %>
+      <%= render "form", store: @store %>
 
-  <%= link_to "Back to stores", stores_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+      <div class="mt-5 text-center">
+        <%= link_to stores_path, class: "btn btn-outline-primary btn-lg fw-medium px-4 py-2", style: "border-radius: 15px; border: 2px solid var(--pastel-primary); color: var(--text-dark);" do %>
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Stores
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

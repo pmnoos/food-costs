@@ -1,10 +1,22 @@
 <% content_for :title, "Editing store" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing store</h1>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="display-4 fw-bold text-dark mb-4">Edit Store</h1>
 
-  <%= render "form", store: @store %>
+      <%= render "form", store: @store %>
 
-  <%= link_to "Show this store", @store, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to stores", stores_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+        <%= link_to @store, class: "btn btn-outline-primary" do %>
+          <i class="bi bi-eye me-2"></i>
+          View Store
+        <% end %>
+        <%= link_to stores_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Stores
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

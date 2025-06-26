@@ -1,0 +1,244 @@
+<div class="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumb -->
+    <div class="mb-8">
+      <%= link_to recipes_path, class: "text-orange-600 hover:text-orange-700 font-medium flex items-center" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Recipes
+      <% end %>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <!-- Recipe Header -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <div class="flex items-start justify-between mb-6">
+            <div class="flex-1">
+              <h1 class="text-4xl font-bold text-gray-900 mb-4"><%= @recipe.name %></h1>
+              
+              <!-- Badges -->
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="px-4 py-2 bg-orange-100 text-orange-800 text-sm font-medium rounded-full">
+                  <%= @recipe.cuisine %>
+                </span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                  <%= @recipe.difficulty %>
+                </span>
+                <% if @recipe.occasion.present? %>
+                  <span class="px-4 py-2 bg-purple-100 text-purple-800 text-sm font-medium rounded-full">
+                    <%= @recipe.occasion %>
+                  </span>
+                <% end %>
+              </div>
+
+              <!-- Recipe Stats -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <% if @recipe.prep_time.present? %>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-orange-600"><%= @recipe.prep_time %></div>
+                    <div class="text-sm text-gray-600">Prep Time (min)</div>
+                  </div>
+                <% end %>
+                <% if @recipe.cook_time.present? %>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-orange-600"><%= @recipe.cook_time %></div>
+                    <div class="text-sm text-gray-600">Cook Time (min)</div>
+                  </div>
+                <% end %>
+                <% if @recipe.servings.present? %>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-orange-600"><%= @recipe.servings %></div>
+                    <div class="text-sm text-gray-600">Servings</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-3 ml-6">
+              <%= link_to edit_recipe_path(@recipe), class: "bg-gray-100 text-gray-700 p-3 rounded-lg hover:bg-gray-200 transition-colors duration-200" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+              <% end %>
+              <%= link_to recipe_path(@recipe), method: :delete, data: { confirm: "Are you sure you want to delete this recipe?" }, class: "bg-red-100 text-red-700 p-3 rounded-lg hover:bg-red-200 transition-colors duration-200" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recipe Description -->
+        <% if @recipe.description.present? %>
+          <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <svg class="w-6 h-6 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+              </svg>
+              About This Recipe
+            </h2>
+            <div class="prose prose-lg max-w-none">
+              <%= @recipe.description %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Ingredients -->
+        <% if @recipe.ingredients.present? %>
+          <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <svg class="w-6 h-6 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+              </svg>
+              Ingredients
+            </h2>
+            <div class="prose prose-lg max-w-none">
+              <%= simple_format(@recipe.ingredients, class: "text-gray-700 leading-relaxed") %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Cooking Method -->
+        <% if @recipe.instructions.present? %>
+          <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <svg class="w-6 h-6 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Cooking Method
+            </h2>
+            <div class="prose prose-lg max-w-none">
+              <%= simple_format(@recipe.instructions, class: "text-gray-700 leading-relaxed") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Recipe Image -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <% if @recipe.image.attached? %>
+            <%= image_tag @recipe.image, class: "w-full h-64 object-cover rounded-xl mb-6" %>
+          <% else %>
+            <div class="h-64 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl flex items-center justify-center mb-6">
+              <span class="text-8xl">
+                <%=
+                  case @recipe.cuisine
+                  when "Italian"
+                    "🇮🇹"
+                  when "Mexican"
+                    "🇲🇽"
+                  when "Chinese"
+                    "🇨🇳"
+                  when "Indian"
+                    "🇮🇳"
+                  when "Thai"
+                    "🇹🇭"
+                  when "Japanese"
+                    "🇯🇵"
+                  when "French"
+                    "🇫🇷"
+                  when "Mediterranean"
+                    "🏺"
+                  when "Greek"
+                    "🇬🇷"
+                  when "Spanish"
+                    "🇪🇸"
+                  when "Moroccan"
+                    "🇲🇦"
+                  when "Turkish"
+                    "🇹🇷"
+                  when "Lebanese"
+                    "🇱🇧"
+                  when "Vietnamese"
+                    "🇻🇳"
+                  when "Korean"
+                    "🇰🇷"
+                  when "Ethiopian"
+                    "🇪🇹"
+                  when "Brazilian"
+                    "🇧🇷"
+                  when "Peruvian"
+                    "🇵🇪"
+                  when "Argentinian"
+                    "🇦🇷"
+                  when "Caribbean"
+                    "🏝️"
+                  when "American"
+                    "🇺🇸"
+                  when "British"
+                    "🇬🇧"
+                  when "German"
+                    "🇩🇪"
+                  when "Russian"
+                    "🇷🇺"
+                  when "Polish"
+                    "🇵🇱"
+                  when "Hungarian"
+                    "🇭🇺"
+                  when "Swedish"
+                    "🇸🇪"
+                  else
+                    "🍽️"
+                  end
+                %>
+              </span>
+            </div>
+          <% end %>
+          
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Recipe Details</h3>
+          <div class="space-y-3 text-sm text-gray-600">
+            <div class="flex justify-between">
+              <span>Cuisine:</span>
+              <span class="font-medium"><%= @recipe.cuisine %></span>
+            </div>
+            <div class="flex justify-between">
+              <span>Difficulty:</span>
+              <span class="font-medium"><%= @recipe.difficulty %></span>
+            </div>
+            <% if @recipe.occasion.present? %>
+              <div class="flex justify-between">
+                <span>Perfect for:</span>
+                <span class="font-medium"><%= @recipe.occasion %></span>
+              </div>
+            <% end %>
+            <% if @recipe.prep_time.present? %>
+              <div class="flex justify-between">
+                <span>Prep time:</span>
+                <span class="font-medium"><%= @recipe.prep_time %> min</span>
+              </div>
+            <% end %>
+            <% if @recipe.cook_time.present? %>
+              <div class="flex justify-between">
+                <span>Cook time:</span>
+                <span class="font-medium"><%= @recipe.cook_time %> min</span>
+              </div>
+            <% end %>
+            <% if @recipe.servings.present? %>
+              <div class="flex justify-between">
+                <span>Servings:</span>
+                <span class="font-medium"><%= @recipe.servings %></span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+          <div class="space-y-3">
+            <%= link_to "Add to Menu", "#", class: "w-full bg-orange-600 text-white text-center py-3 px-4 rounded-lg hover:bg-orange-700 transition-colors duration-200 font-medium block" %>
+            <%= link_to "Print Recipe", "#", class: "w-full bg-gray-100 text-gray-700 text-center py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200 font-medium block" %>
+            <%= link_to "Share Recipe", "#", class: "w-full bg-gray-100 text-gray-700 text-center py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200 font-medium block" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

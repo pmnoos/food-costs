@@ -1,0 +1,235 @@
+<div class="min-vh-100 bg-light py-5">
+  <div class="container-fluid">
+    <!-- Header -->
+    <div class="mb-5">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <h1 class="display-4 fw-bold text-dark mb-2"><%= @recipe.name %></h1>
+          <div class="d-flex align-items-center gap-4 text-muted small">
+            <span class="d-flex align-items-center">
+              <i class="bi bi-geo-alt me-1"></i>
+              <%= @recipe.cuisine %> Cuisine
+            </span>
+            <span class="d-flex align-items-center">
+              <i class="bi bi-check-circle me-1"></i>
+              <%= @recipe.difficulty %> Level
+            </span>
+            <% if @recipe.occasion.present? %>
+              <span class="d-flex align-items-center">
+                <i class="bi bi-calendar-event me-1"></i>
+                Perfect for <%= @recipe.occasion %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="d-flex gap-2">
+          <%= link_to edit_recipe_path(@recipe), class: "btn btn-outline-primary" do %>
+            <i class="bi bi-pencil me-1"></i>
+            Edit Recipe
+          <% end %>
+          <%= link_to recipes_path, class: "btn btn-outline-secondary" do %>
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Recipes
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+          <!-- Recipe Stats -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-3">
+        <div class="card text-center border-0 shadow-sm">
+          <div class="card-body">
+            <div class="display-6 text-warning mb-2">⏱️</div>
+            <h5 class="fw-bold text-dark mb-1">
+              <%= @recipe.prep_time || "N/A" %>
+            </h5>
+            <p class="text-muted small mb-0">Prep Time (min)</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card text-center border-0 shadow-sm">
+          <div class="card-body">
+            <div class="display-6 text-danger mb-2">🔥</div>
+            <h5 class="fw-bold text-dark mb-1">
+              <%= @recipe.cook_time || "N/A" %>
+            </h5>
+            <p class="text-muted small mb-0">Cook Time (min)</p>
+              </div>
+              </div>
+              </div>
+      
+      <div class="col-md-3">
+        <div class="card text-center border-0 shadow-sm">
+          <div class="card-body">
+            <div class="display-6 text-success mb-2">👥</div>
+            <h5 class="fw-bold text-dark mb-1">
+              <%= @recipe.servings || "N/A" %>
+            </h5>
+            <p class="text-muted small mb-0">Servings</p>
+          </div>
+        </div>
+          </div>
+
+      <div class="col-md-3">
+        <div class="card text-center border-0 shadow-sm">
+          <div class="card-body">
+            <div class="display-6 text-info mb-2">⭐</div>
+            <h5 class="fw-bold text-dark mb-1">
+              <%= @recipe.difficulty %>
+            </h5>
+            <p class="text-muted small mb-0">Difficulty</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-5">
+      <!-- Recipe Content -->
+      <div class="col-lg-8">
+        <!-- Ingredients -->
+        <% if @recipe.ingredients.present? %>
+          <div class="card shadow-lg mb-4">
+            <div class="card-body p-4">
+              <h2 class="h3 fw-bold text-dark mb-4 d-flex align-items-center">
+                <i class="bi bi-basket me-3 text-warning"></i>
+              Ingredients
+            </h2>
+              <div class="prose">
+              <%= sanitize @recipe.ingredients %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Cooking Method -->
+        <% if @recipe.instructions.present? %>
+          <div class="card shadow-lg mb-4">
+            <div class="card-body p-4">
+              <h2 class="h3 fw-bold text-dark mb-4 d-flex align-items-center">
+                <i class="bi bi-journal-text me-3 text-warning"></i>
+              Cooking Method
+            </h2>
+              <div class="prose">
+                <%= sanitize @recipe.instructions %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Recipe Description -->
+        <% if @recipe.instructions.present? %>
+          <div class="card shadow-lg mb-4">
+            <div class="card-body p-4">
+              <h2 class="h3 fw-bold text-dark mb-4 d-flex align-items-center">
+                <i class="bi bi-chat-quote me-3 text-warning"></i>
+                About This Recipe
+              </h2>
+              <div class="prose">
+              <%= sanitize @recipe.instructions %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Recipe Info Card -->
+        <div class="card shadow-lg mb-4 sticky-top" style="top: 2rem;">
+          <div class="card-body p-4">
+            <h3 class="h5 fw-bold text-dark mb-4">Recipe Information</h3>
+            
+            <div class="mb-4">
+              <h6 class="fw-medium text-dark mb-2">Cuisine</h6>
+              <span class="badge bg-warning-subtle text-warning-emphasis fs-6">
+                <%= @recipe.cuisine %>
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <h6 class="fw-medium text-dark mb-2">Difficulty</h6>
+              <% difficulty_color = case @recipe.difficulty
+                 when "Easy"
+                   "success"
+                 when "Medium"
+                   "warning"
+                 when "Hard"
+                   "danger"
+                 else
+                   "secondary"
+                 end %>
+              <span class="badge bg-<%= difficulty_color %>-subtle text-<%= difficulty_color %>-emphasis fs-6">
+                <%= @recipe.difficulty %>
+              </span>
+            </div>
+
+            <% if @recipe.occasion.present? %>
+              <div class="mb-4">
+                <h6 class="fw-medium text-dark mb-2">Perfect For</h6>
+                <span class="badge bg-info-subtle text-info-emphasis fs-6">
+                  <%= @recipe.occasion %>
+                </span>
+              </div>
+            <% end %>
+
+            <div class="d-grid gap-2">
+              <%= link_to edit_recipe_path(@recipe), class: "btn btn-warning" do %>
+                <i class="bi bi-pencil me-2"></i>
+                Edit Recipe
+            <% end %>
+              <%= button_to recipe_path(@recipe), method: :delete, 
+                  data: { confirm: "Are you sure you want to delete this recipe?" }, 
+                  class: "btn btn-outline-danger" do %>
+                <i class="bi bi-trash me-2"></i>
+                Delete Recipe
+            <% end %>
+              </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card shadow-lg">
+          <div class="card-body p-4">
+            <h3 class="h5 fw-bold text-dark mb-4">Quick Actions</h3>
+            <div class="d-grid gap-2">
+              <%= link_to new_menu_path, class: "btn btn-outline-success" do %>
+                <i class="bi bi-plus-circle me-2"></i>
+                Add to Menu
+              <% end %>
+              <%= link_to recipes_path, class: "btn btn-outline-secondary" do %>
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Recipes
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('turbo:load', function() {
+  var shareBtn = document.getElementById('share-recipe-btn');
+  if (shareBtn) {
+    shareBtn.onclick = function(e) {
+      e.preventDefault();
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: 'Check out this recipe!',
+          url: window.location.href
+        });
+      } else {
+        prompt('Copy this link to share:', window.location.href);
+      }
+      return false;
+    };
+  }
+});
+</script> 

@@ -3,6 +3,18 @@ Rails.application.routes.draw do
   get "reports/index"
   resources :products
   resources :stores
+  resources :recipes
+  resources :menus do
+    member do
+      post :add_recipe
+      delete :remove_recipe
+    end
+  end
+  
+  # Settings and Help routes
+  get "settings", to: "settings#index"
+  get "help", to: "help#index"
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Custom health check endpoint

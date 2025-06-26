@@ -1,47 +1,70 @@
 <% content_for :title, "Showing store" %>
 
-<div class="md:w-2/3 w-full">
+<div class="container-fluid py-5">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
   <% end %>
 
-  <h1 class="font-bold text-4xl">Showing store</h1>
+  <div class="row">
+    <div class="col-lg-8">
+      <h1 class="display-4 fw-bold text-dark mb-4">Store Details</h1>
 
-  <%= render @store %>
+      <%= render @store %>
 
-  <div class="mt-8">
-    <h2 class="text-2xl font-bold mb-4">Purchases</h2>
+      <div class="mt-5">
+        <h2 class="h2 fw-bold text-dark mb-4">Purchases</h2>
 
-    <% @products_by_date.each do |date, products| %>
-      <h3 class="text-xl font-semibold mt-6 mb-2"><%= date.strftime("%A, %B %d, %Y") %></h3>
-      <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
-          <thead class="bg-gray-200">
-            <tr>
-              <th class="w-1/4 py-2 px-4 text-left">Product</th>
-              <th class="w-1/4 py-2 px-4 text-left">Unit Price</th>
-              <th class="w-1/4 py-2 px-4 text-left">Quantity</th>
-              <th class="w-1/4 py-2 px-4 text-left">Total Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% products.each do |product| %>
-              <tr class="border-b">
-                <td class="py-2 px-4"><%= product.name %></td>
-                <td class="py-2 px-4"><%= number_to_currency(product.unit_price) %></td>
-                <td class="py-2 px-4"><%= product.quantity %></td>
-                <td class="py-2 px-4"><%= number_to_currency(product.total_cost) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <% @products_by_date.each do |date, products| %>
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+              <h3 class="h5 fw-bold text-dark mb-0"><%= date.strftime("%A, %B %d, %Y") %></h3>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="border-0">Product</th>
+                      <th class="border-0">Unit Price</th>
+                      <th class="border-0">Quantity</th>
+                      <th class="border-0">Total Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% products.each do |product| %>
+                      <tr>
+                        <td class="fw-medium"><%= product.name %></td>
+                        <td><%= number_to_currency(product.unit_price) %></td>
+                        <td><%= product.quantity %></td>
+                        <td class="fw-bold text-primary"><%= number_to_currency(product.total_cost) %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
 
-  <div class="mt-8">
-    <%= link_to "Edit this store", edit_store_path(@store), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-    <%= link_to "Back to stores", stores_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-    <%= button_to "Destroy this store", @store, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-5">
+        <%= link_to edit_store_path(@store), class: "btn btn-outline-primary" do %>
+          <i class="bi bi-pencil me-2"></i>
+          Edit Store
+        <% end %>
+        <%= link_to stores_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Stores
+        <% end %>
+        <%= button_to @store, method: :delete, class: "btn btn-outline-danger", data: { turbo_confirm: "Are you sure?" } do %>
+          <i class="bi bi-trash me-2"></i>
+          Delete Store
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
