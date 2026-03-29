@@ -3,7 +3,7 @@ class StoresController < ApplicationController
 
   # GET /stores or /stores.json
   def index
-    @stores = Store.all
+    @stores = Store.page(params[:page]).per(12)
   end
 
   # GET /stores/1 or /stores/1.json

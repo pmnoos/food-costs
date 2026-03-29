@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_23_001345) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_27_120000) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -54,8 +57,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_001345) do
     t.integer "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "course"
+    t.integer "position"
+    t.index ["course"], name: "index_menu_recipes_on_course"
     t.index ["menu_id", "recipe_id"], name: "index_menu_recipes_on_menu_id_and_recipe_id", unique: true
     t.index ["menu_id"], name: "index_menu_recipes_on_menu_id"
+    t.index ["position"], name: "index_menu_recipes_on_position"
     t.index ["recipe_id"], name: "index_menu_recipes_on_recipe_id"
   end
 
@@ -100,6 +107,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_23_001345) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "notes"
+    t.integer "calories"
+    t.decimal "carbohydrates_g", precision: 8, scale: 2
+    t.decimal "protein_g", precision: 8, scale: 2
+    t.decimal "fat_g", precision: 8, scale: 2
+    t.decimal "saturated_fat_g", precision: 8, scale: 2
+    t.decimal "polyunsaturated_fat_g", precision: 8, scale: 2
+    t.decimal "monounsaturated_fat_g", precision: 8, scale: 2
+    t.decimal "trans_fat_g", precision: 8, scale: 2
+    t.decimal "cholesterol_mg", precision: 8, scale: 2
+    t.decimal "sodium_mg", precision: 8, scale: 2
+    t.decimal "potassium_mg", precision: 8, scale: 2
+    t.decimal "fiber_g", precision: 8, scale: 2
+    t.decimal "sugar_g", precision: 8, scale: 2
+    t.decimal "vitamin_a_iu", precision: 10, scale: 2
+    t.decimal "vitamin_c_mg", precision: 8, scale: 2
+    t.decimal "calcium_mg", precision: 8, scale: 2
+    t.decimal "iron_mg", precision: 8, scale: 2
     t.index ["cuisine"], name: "index_recipes_on_cuisine"
     t.index ["difficulty"], name: "index_recipes_on_difficulty"
     t.index ["occasion"], name: "index_recipes_on_occasion"

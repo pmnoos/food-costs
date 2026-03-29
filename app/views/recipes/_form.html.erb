@@ -1,5 +1,5 @@
-<%= form_with model: recipe, local: true, class: "card" do |form| %>
-  <div class="card-body">
+<%= form_with model: recipe, local: true, html: { class: "card wide-card shadow-lg border-0 bg-white", style: "border-radius: 1.5rem;" } do |form| %>
+  <div class="card-body py-4 px-4">
     <% if recipe.errors.any? %>
       <div class="alert alert-danger">
         <div class="d-flex">
@@ -22,7 +22,8 @@
       </div>
     <% end %>
 
-    <div class="row g-3">
+    <h3 class="mb-4 fw-bold text-center" style="background: linear-gradient(90deg, #6a82fb, #fc5c7d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Recipe Details</h3>
+    <div class="row g-4">
       <div class="col-md-6">
         <%= form.label :name, class: "form-label" %>
         <%= form.text_field :name, class: "form-control", placeholder: "e.g., Spaghetti Carbonara" %>
@@ -88,25 +89,29 @@
             { class: "form-select" } %>
       </div>
 
+
       <div class="col-12">
-        <%= form.label :ingredients, class: "form-label" %>
-        <%= form.rich_text_area :ingredients, class: "form-control tinymce", placeholder: "List all ingredients with quantities..." %>
+        <h5 class="fw-semibold mt-4 mb-2" style="color: #6a82fb;">Ingredients</h5>
+        <%= form.label :ingredients, class: "form-label visually-hidden" %>
+        <%= form.text_area :ingredients, class: "form-control tinymce border border-primary-subtle shadow-sm", placeholder: "List all ingredients with quantities...", rows: 6, style: "background: #f8fafc; border-radius: 0.5rem; min-height: 120px;" %>
       </div>
 
       <div class="col-12">
-        <%= form.label :instructions, class: "form-label" %>
-        <%= form.rich_text_area :instructions, class: "form-control tinymce", placeholder: "Step-by-step cooking instructions..." %>
+        <h5 class="fw-semibold mt-4 mb-2" style="color: #fc5c7d;">Instructions</h5>
+        <%= form.label :instructions, class: "form-label visually-hidden" %>
+        <%= form.text_area :instructions, class: "form-control tinymce border border-danger-subtle shadow-sm", placeholder: "Step-by-step cooking instructions...", rows: 8, style: "background: #f8fafc; border-radius: 0.5rem; min-height: 160px;" %>
       </div>
 
       <div class="col-12">
-        <%= form.label :notes, class: "form-label" %>
-        <%= form.text_area :notes, class: "form-control", rows: 3, placeholder: "Any additional notes, tips, or variations..." %>
+        <h5 class="fw-semibold mt-4 mb-2" style="color: #7b8c99;">Notes</h5>
+        <%= form.label :notes, class: "form-label visually-hidden" %>
+        <%= form.text_area :notes, class: "form-control border border-info-subtle shadow-sm", rows: 3, placeholder: "Any additional notes, tips, or variations...", style: "background: #f8fafc; border-radius: 0.5rem;" %>
       </div>
     </div>
 
-    <div class="d-flex gap-2 mt-4">
-      <%= form.submit class: "btn btn-primary" %>
-      <%= link_to "Cancel", recipes_path, class: "btn btn-outline-secondary" %>
+    <div class="d-flex gap-2 mt-4 justify-content-center">
+      <%= form.submit "Save Changes", class: "btn btn-primary px-4 py-2 fw-semibold shadow-sm" %>
+      <%= link_to "Cancel", recipes_path, class: "btn btn-outline-secondary px-4 py-2 fw-semibold" %>
     </div>
   </div>
 <% end %> 

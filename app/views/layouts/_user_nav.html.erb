@@ -1,0 +1,25 @@
+<% if user_signed_in? %>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle me-1"></i>
+      <%= current_user.email %>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+      <li><%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %></li>
+      <li><%= link_to 'Settings', settings_path, class: 'dropdown-item' %></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+    </ul>
+  </li>
+<% else %>
+  <li class="nav-item">
+    <%= link_to new_user_session_path, class: "nav-link" do %>
+      <i class="bi bi-box-arrow-in-right me-1"></i>Login
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to new_user_registration_path, class: "nav-link" do %>
+      <i class="bi bi-person-plus me-1"></i>Sign Up
+    <% end %>
+  </li>
+<% end %>

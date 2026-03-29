@@ -4,18 +4,21 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
-    
+
     # Apply filters
     if params[:store_id].present?
       @products = @products.where(store_id: params[:store_id])
     end
-    
+
     if params[:purchase_date].present?
       @products = @products.where(purchase_date: params[:purchase_date])
     end
-    
+
     # Get stores for filter dropdown
     @stores = Store.all
+
+    # Pagination (12 per page)
+    @products = @products.page(params[:page]).per(12)
   end
 
   # GET /products/1 or /products/1.json

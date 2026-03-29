@@ -1,0 +1,30 @@
+<li class="nav-item">
+  <%= link_to stores_path, class: "nav-link #{'active' if current_page?(stores_path)}" do %>
+    <i class="bi bi-shop me-1"></i>Stores
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to products_path, class: "nav-link #{'active' if current_page?(products_path)}" do %>
+    <i class="bi bi-bag me-1"></i>Products
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to new_product_path, class: "nav-link #{'active' if current_page?(new_product_path)}" do %>
+    <i class="bi bi-plus-circle me-1"></i>Purchase
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to recipes_path, class: "nav-link #{'active' if current_page?(recipes_path)}" do %>
+    <i class="bi bi-journal-text me-1"></i>Recipes
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to menus_path, class: "nav-link #{'active' if current_page?(menus_path)}" do %>
+    <i class="bi bi-calendar-week me-1"></i>Menus
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to reports_index_path, class: "nav-link #{'active' if current_page?(reports_index_path)}" do %>
+    <i class="bi bi-graph-up me-1"></i>Reports
+  <% end %>
+</li>

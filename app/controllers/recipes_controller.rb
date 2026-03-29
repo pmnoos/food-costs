@@ -4,19 +4,22 @@ class RecipesController < ApplicationController
 
   def index
     @recipes = current_user.recipes
-    
+
     # Filter by cuisine if specified
     @recipes = @recipes.by_cuisine(params[:cuisine]) if params[:cuisine].present?
-    
+
     # Filter by occasion if specified
     @recipes = @recipes.by_occasion(params[:occasion]) if params[:occasion].present?
-    
+
     # Filter by difficulty if specified
     @recipes = @recipes.by_difficulty(params[:difficulty]) if params[:difficulty].present?
-    
+
     # Search by name if specified
     @recipes = @recipes.where("name ILIKE ?", "%#{params[:search]}%") if params[:search].present?
-    
+
+    # Pagination (12 per page)
+    @recipes = @recipes.page(params[:page]).per(12)
+
     @cuisines = Recipe::CUISINES
     @occasions = Recipe::OCCASIONS
     @difficulties = Recipe::DIFFICULTIES

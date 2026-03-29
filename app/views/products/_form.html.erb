@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
-  <div class="col-lg-8 col-xl-6">
-    <div class="card shadow-lg border-0" style="border-radius: 20px; border: 2px solid var(--pastel-primary);">
-      <div class="card-header text-white py-4" style="background: linear-gradient(135deg, #b0e0e6 0%, #e6e6fa 100%); border-radius: 18px 18px 0 0; border-bottom: 2px solid var(--pastel-primary);">
+  <div class="col-lg-7 col-xl-5">
+    <div class="card shadow-lg border-0" style="border-radius: 16px; border: 2px solid var(--pastel-primary); min-width: 300px; padding: 0.5rem 0.5rem 0 0.5rem;">
+      <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #b0e0e6 0%, #e6e6fa 100%); border-radius: 14px 14px 0 0; border-bottom: 2px solid var(--pastel-primary);">
         <h5 class="mb-0 d-flex align-items-center text-dark fw-bold">
           <i class="bi bi-basket me-3 fs-4"></i>
           <%= product.new_record? ? "Add New Product" : "Edit Product" %>
@@ -11,7 +11,7 @@
         </p>
       </div>
 
-      <%= form_with(model: product, class: "card-body p-4") do |form| %>
+      <%= form_with(model: product, class: "card-body p-3") do |form| %>
         <% if product.errors.any? %>
           <div class="alert alert-danger border-0 shadow-sm mb-4" style="border-radius: 15px; background: linear-gradient(45deg, var(--pastel-orange), var(--pastel-warm)); border: 2px solid var(--pastel-orange);">
             <div class="d-flex align-items-center">
@@ -30,13 +30,13 @@
           </div>
         <% end %>
 
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column gap-3" style="gap: 1.1rem !important;">
           <div class="form-group">
             <%= form.label :name, class: "form-label d-flex align-items-center fw-semibold text-dark mb-2" do %>
               <i class="bi bi-tag me-2" style="color: var(--pastel-primary);"></i>
               Product Name
             <% end %>
-            <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "e.g., Organic Bananas", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+            <%= form.text_field :name, class: "form-control", placeholder: "e.g., Organic Bananas", style: "border-radius: 7px; border: 2px solid var(--pastel-primary); background: rgba(255,255,255,0.8); font-size: 1.1rem; height: 2.3rem; padding-left: 0.7rem;" %>
           </div>
 
           <div class="form-group">
@@ -44,7 +44,7 @@
               <i class="bi bi-shop me-2" style="color: var(--pastel-primary);"></i>
               Store
             <% end %>
-            <%= form.collection_select :store_id, Store.all, :id, :name, { prompt: "Select a store" }, { class: "form-select form-select-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" } %>
+            <%= form.collection_select :store_id, Store.all, :id, :name, { prompt: "Select a store" }, { class: "form-select", style: "border-radius: 7px; border: 2px solid var(--pastel-primary); background: rgba(255,255,255,0.8); min-width: 180px;" } %>
           </div>
 
           <div class="form-group">
@@ -52,7 +52,7 @@
               <i class="bi bi-calendar me-2" style="color: var(--pastel-primary);"></i>
               Purchase Date
             <% end %>
-            <%= form.date_field :purchase_date, class: "form-control form-control-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+            <%= form.date_field :purchase_date, class: "form-control", style: "border-radius: 7px; border: 2px solid var(--pastel-primary); background: rgba(255,255,255,0.8); height: 2.3rem; font-size: 1.1rem;" %>
           </div>
 
           <div class="row">
@@ -77,7 +77,7 @@
                       ['Other', 'other']
                     ], product.unit), 
                     { prompt: "Select unit" }, 
-                    { class: "form-select form-select-lg", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" } %>
+                    { class: "form-select", style: "border-radius: 7px; border: 2px solid var(--pastel-primary); background: rgba(255,255,255,0.8); min-width: 140px;" } %>
               </div>
             </div>
             <div class="col-md-6">
@@ -86,7 +86,7 @@
                   <i class="bi bi-hash me-2" style="color: var(--pastel-primary);"></i>
                   Quantity
                 <% end %>
-                <%= form.number_field :quantity, class: "form-control form-control-lg", step: "0.01", placeholder: "1.0", style: "border-radius: 8px; border: 2px solid var(--pastel-primary); background: rgba(255, 255, 255, 0.8);" %>
+                <%= form.number_field :quantity, class: "form-control", step: "0.01", placeholder: "1.0", style: "border-radius: 7px; border: 2px solid var(--pastel-primary); background: rgba(255,255,255,0.8); height: 2.3rem; font-size: 1.1rem;" %>
               </div>
             </div>
           </div>
@@ -98,11 +98,11 @@
                   <i class="bi bi-currency-dollar me-2" style="color: var(--pastel-primary);"></i>
                   Unit Price
                 <% end %>
-                <div class="input-group input-group-lg">
-                  <span class="input-group-text" style="border-radius: 8px 0 0 8px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255, 255, 255, 0.9);">
+                <div class="input-group" style="height:2.3rem;">
+                  <span class="input-group-text" style="border-radius: 7px 0 0 7px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255,255,255,0.9); font-size:1.1rem; height:2.3rem;">
                     <i class="bi bi-currency-dollar text-muted"></i>
                   </span>
-                  <%= form.number_field :unit_price, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 8px 8px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255, 255, 255, 0.8);" %>
+                  <%= form.number_field :unit_price, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 7px 7px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255,255,255,0.8); font-size:1.1rem; height:2.3rem;" %>
                 </div>
               </div>
             </div>
@@ -112,18 +112,18 @@
                   <i class="bi bi-calculator me-2" style="color: var(--pastel-primary);"></i>
                   Total Cost
                 <% end %>
-                <div class="input-group input-group-lg">
-                  <span class="input-group-text" style="border-radius: 8px 0 0 8px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255, 255, 255, 0.9);">
+                <div class="input-group" style="height:2.3rem;">
+                  <span class="input-group-text" style="border-radius: 7px 0 0 7px; border: 2px solid var(--pastel-primary); border-right: none; background: rgba(255,255,255,0.9); font-size:1.1rem; height:2.3rem;">
                     <i class="bi bi-currency-dollar text-muted"></i>
                   </span>
-                  <%= form.number_field :total_cost, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 8px 8px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255, 255, 255, 0.8);" %>
+                  <%= form.number_field :total_cost, class: "form-control", step: "0.01", placeholder: "0.00", style: "border-radius: 0 7px 7px 0; border: 2px solid var(--pastel-primary); border-left: none; background: rgba(255,255,255,0.8); font-size:1.1rem; height:2.3rem;" %>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="d-flex gap-3 mt-5 pt-4 border-top" style="border-color: var(--pastel-primary) !important;">
+        <div class="d-flex gap-2 mt-4 pt-4 border-top justify-content-center" style="border-color: var(--pastel-primary) !important; gap: 1.2rem !important;">
           <%= form.submit class: "btn px-4 py-2 fw-medium", style: "background: linear-gradient(45deg, var(--pastel-primary), var(--pastel-accent)); border: none; border-radius: 25px; color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-soft);" do %>
             <i class="bi bi-check-circle me-2"></i>
             <%= product.new_record? ? "Create Product" : "Update Product" %>

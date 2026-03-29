@@ -23,74 +23,109 @@
   </div>
 
     <div class="row">
-      <div class="col-lg-8">
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5 class="mb-0">Product Information</h5>
-      </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <dl class="row">
-                  <dt class="col-sm-4 text-muted">Name</dt>
-                  <dd class="col-sm-8"><%= @product.name %></dd>
-                  
-                  <dt class="col-sm-4 text-muted">Purchase Date</dt>
-                  <dd class="col-sm-8"><%= @product.purchase_date&.strftime("%B %d, %Y") || "Not specified" %></dd>
-                  
-                  <dt class="col-sm-4 text-muted">Store</dt>
-                  <dd class="col-sm-8"><%= @product.store.name %></dd>
-                  
-                  <dt class="col-sm-4 text-muted">Unit</dt>
-                  <dd class="col-sm-8"><%= @product.unit %></dd>
-                </dl>
+      <div class="min-vh-100" style="background: linear-gradient(135deg, #f8fafc 0%, #e6e6fa 100%);">
+        <div class="container py-5">
+          <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+                <div>
+                  <h1 class="display-5 fw-bold mb-2" style="color: #6a82fb; letter-spacing: 1px;">Product Details</h1>
+                </div>
+                <div class="d-flex flex-column flex-md-row gap-2 mt-3 mt-md-0">
+                  <%= link_to edit_product_path(@product), class: "btn btn-primary d-inline-flex align-items-center px-4 py-2 fw-semibold shadow-sm" do %>
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Edit
+                  <% end %>
+                  <%= link_to products_path, class: "btn btn-outline-secondary d-inline-flex align-items-center px-4 py-2 fw-semibold" do %>
+                    <i class="bi bi-arrow-left me-2"></i>
+                    Back
+                  <% end %>
+                </div>
               </div>
-              
-              <div class="col-md-6">
-                <dl class="row">
-                  <dt class="col-sm-4 text-muted">Unit Price</dt>
-                  <dd class="col-sm-8 fw-bold"><%= number_to_currency(@product.unit_price) %></dd>
-                  
-                  <dt class="col-sm-4 text-muted">Quantity</dt>
-                  <dd class="col-sm-8"><%= @product.quantity %></dd>
-                  
-                  <dt class="col-sm-4 text-muted">Total Cost</dt>
-                  <dd class="col-sm-8">
-                    <span class="fw-bold <%= @product.total_cost < 0 ? 'text-danger' : 'text-success' %>">
-                      <%= number_to_currency(@product.total_cost) %>
-                    </span>
-                </dd>
-                </dl>
+              <div class="row g-4">
+                <div class="col-lg-8">
+                  <div class="card shadow-lg border-0 mb-4" style="border-radius: 1.5rem;">
+                    <div class="card-header bg-white border-0" style="border-radius: 1.5rem 1.5rem 0 0;">
+                      <h5 class="mb-0 fw-bold" style="color: #fc5c7d;">Product Information</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-borderless align-middle mb-0">
+                          <tbody>
+                            <tr>
+                              <th class="text-muted">Product Name</th>
+                              <td class="fw-semibold"><%= @product.name %></td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Purchase Date</th>
+                              <td><%= @product.purchase_date&.strftime("%B %d, %Y") || "Not specified" %></td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Store</th>
+                              <td><%= @product.store&.name.presence || "Not specified" %></td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Unit</th>
+                              <td>
+                                <% unit_labels = {
+                                  'lb' => 'Pound (lb)',
+                                  'kg' => 'Kilogram (kg)',
+                                  'oz' => 'Ounce (oz)',
+                                  'g'  => 'Gram (g)',
+                                  'pc' => 'Piece (pc)',
+                                  'pk' => 'Pack (pk)',
+                                  'btl'=> 'Bottle (btl)',
+                                  'can'=> 'Can (can)',
+                                  'box'=> 'Box (box)',
+                                  'bag'=> 'Bag (bag)',
+                                  'other' => 'Other'
+                                } %>
+                                <%= @product.unit.present? ? (unit_labels[@product.unit] || @product.unit) : "Not specified" %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Unit Price</th>
+                              <td class="fw-bold"><%= number_to_currency(@product.unit_price) %></td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Quantity</th>
+                              <td><%= @product.quantity %></td>
+                            </tr>
+                            <tr>
+                              <th class="text-muted">Total Cost</th>
+                              <td>
+                                <span class="fw-bold <%= @product.total_cost < 0 ? 'text-danger' : 'text-success' %>">
+                                  <%= number_to_currency(@product.total_cost) %>
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-xl-5">
+                  <div class="card shadow-lg border-0" style="border-radius: 1.5rem; min-width: 320px;">
+                    <div class="card-header bg-white border-0" style="border-radius: 1.5rem 1.5rem 0 0;">
+                      <h6 class="mb-0 fw-bold" style="color: #7b8c99;">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-grid gap-3">
+                        <%= link_to new_product_path(store_id: @product.store_id), class: "btn btn-outline-primary px-4 py-2 fw-semibold" do %>
+                          <i class="bi bi-plus-circle me-2"></i>
+                          Add Another Product
+                        <% end %>
+                        <%= link_to products_path(store_id: @product.store_id), class: "btn btn-outline-info px-4 py-2 fw-semibold" do %>
+                          <i class="bi bi-shop me-2"></i>
+                          View Store Products
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              </div>
-          </div>
+            </div>
           </div>
         </div>
-
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-header">
-            <h6 class="mb-0">Quick Actions</h6>
-              </div>
-          <div class="card-body">
-            <div class="d-grid gap-2">
-              <%= link_to new_product_path(store_id: @product.store_id), class: "btn btn-outline-primary" do %>
-                <svg class="me-2" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                Add Another Product
-              <% end %>
-              
-              <%= link_to products_path(store_id: @product.store_id), class: "btn btn-outline-info" do %>
-                <svg class="me-2" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
-                View Store Products
-              <% end %>
-              </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </div>
-</div>

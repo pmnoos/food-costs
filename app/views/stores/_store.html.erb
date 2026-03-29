@@ -1,12 +1,19 @@
-<div id="<%= dom_id store %>" class="card shadow-sm mb-4">
+<div id="<%= dom_id store %>" class="card shadow-sm mb-4" style="min-width: 340px; max-width: 600px; margin-left: auto; margin-right: auto;">
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <% if store.logo.attached? %>
+          <%= image_tag store.logo, class: "img-thumbnail mb-2", style: "max-height: 80px; border-radius: 12px;" %>
+        <% else %>
+          <i class="bi bi-image fs-1 text-muted"></i>
+        <% end %>
+      </div>
+      <div class="col-md-5">
         <label class="form-label fw-bold text-dark">Store Name:</label>
         <p class="fs-5 text-primary fw-medium"><%= store.name %></p>
       </div>
       <% if store.location.present? %>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label class="form-label fw-bold text-dark">Location:</label>
           <p class="fs-6 text-muted">
             <i class="bi bi-geo-alt me-2"></i>
