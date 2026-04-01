@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="col-md-3 text-center">
         <% if store.logo.attached? %>
-          <%= image_tag store.logo, class: "img-thumbnail mb-2", style: "max-height: 80px; border-radius: 12px;" %>
+          <%= image_tag image_source(store.logo, :card), class: "img-thumbnail mb-2", width: 160, height: 80, style: "max-height: 80px; border-radius: 12px; object-fit: contain;" %>
         <% else %>
           <i class="bi bi-image fs-1 text-muted"></i>
         <% end %>

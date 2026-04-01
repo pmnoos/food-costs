@@ -1,109 +1,134 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
+import "bootstrap"
 
-// Enhanced alert functionality
-document.addEventListener('turbo:load', function() {
-  // Initialize Bootstrap alerts
-  const alerts = document.querySelectorAll('.alert');
-  
-  alerts.forEach(alert => {
-    // Auto-dismiss alerts after 5 seconds
-    setTimeout(() => {
-      if (alert && alert.classList.contains('show')) {
-        // Use Bootstrap's alert dismiss method
-        const bsAlert = new bootstrap.Alert(alert);
-        bsAlert.close();
-      }
-    }, 5000);
+function flagBrokenImages() {
+  const clearBroken = (img) => {
+    if (!img) return;
 
-    // Enhanced close button functionality
-    const closeButton = alert.querySelector('.btn-close');
-    if (closeButton) {
-      closeButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Add slide-up animation
-        alert.style.animation = 'slideUp 0.3s ease-out';
-        
-        setTimeout(() => {
-          // Use Bootstrap's alert dismiss method
-          const bsAlert = new bootstrap.Alert(alert);
-          bsAlert.close();
-        }, 300);
-      });
+    img.classList.remove('is-broken-image');
+    img.removeAttribute('title');
+    delete img.dataset.brokenImageHandled;
+
+    const container = img.closest('.broken-image-flag') || img.parentElement;
+    if (!container) return;
+
+    const badge = container.querySelector('.broken-image-badge');
+    if (badge) badge.remove();
+
+    if (!container.querySelector('.broken-image-badge')) {
+      container.classList.remove('broken-image-flag');
     }
+  };
+
+  const markBroken = (img) => {
+    if (!img || img.dataset.brokenImageHandled === 'true') return;
+
+    img.dataset.brokenImageHandled = 'true';
+    img.classList.add('is-broken-image');
+
+    if (!img.alt || img.alt.trim() === '') {
+      img.alt = 'Image unavailable';
+    }
+
+    img.title = 'Image failed to load';
+
+    const container = img.closest('.broken-image-flag') || img.parentElement;
+    if (!container || container.querySelector('.broken-image-badge')) return;
+
+    container.classList.add('broken-image-flag');
+
+    const badge = document.createElement('span');
+    badge.className = 'broken-image-badge';
+    badge.textContent = 'Image unavailable';
+    container.appendChild(badge);
+  };
+
+  document.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('error', () => markBroken(img), { once: true });
+    img.addEventListener('load', () => clearBroken(img));
+  });
+}
+
+function initProductAutocomplete() {
+  const nameInput = document.getElementById('product_name');
+  if (!nameInput) return;
+
+  // Remove any existing suggestion box
+  let oldBox = document.getElementById('autocomplete-suggestions-box');
+  if (oldBox) oldBox.remove();
+
+  // Create suggestion box
+  const suggestionBox = document.createElement('div');
+  suggestionBox.id = 'autocomplete-suggestions-box';
+  suggestionBox.className = 'autocomplete-suggestions card shadow position-absolute';
+  suggestionBox.style.zIndex = 1000;
+  suggestionBox.style.display = 'none';
+  nameInput.parentNode.appendChild(suggestionBox);
+  nameInput.setAttribute('autocomplete', 'off');
+
+  nameInput.addEventListener('input', function() {
+    const term = nameInput.value.trim();
+    console.log('Input event fired, term:', term);
+    if (term.length < 2) {
+      suggestionBox.style.display = 'none';
+      return;
+    }
+    fetch('/products/autocomplete.json?term=' + encodeURIComponent(term))
+      .then(r => {
+        console.log('Fetch to /products/autocomplete.json returned status:', r.status);
+        return r.json();
+      })
+      .then(data => {
+        console.log('Autocomplete data:', data);
+        suggestionBox.innerHTML = '';
+        if (data.length === 0) {
+          suggestionBox.style.display = 'none';
+          return;
+        }
+        data.forEach(function(item) {
+          const div = document.createElement('div');
+          div.className = 'autocomplete-suggestion list-group-item list-group-item-action';
+          div.textContent = item.name;
+          div.style.cursor = 'pointer';
+          div.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            nameInput.value = item.name;
+            suggestionBox.style.display = 'none';
+            // Fill other fields robustly
+            const storeSelect = document.getElementById('product_store_id');
+            if (storeSelect && item.store_id) storeSelect.value = item.store_id;
+            const unitSelect = document.getElementById('product_unit');
+            if (unitSelect && item.unit) unitSelect.value = item.unit;
+            const quantityInput = document.getElementById('product_quantity');
+            if (quantityInput && item.quantity) {
+              quantityInput.value = item.quantity;
+              quantityInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            const unitPriceInput = document.getElementById('product_unit_price');
+            if (unitPriceInput && item.unit_price) {
+              unitPriceInput.value = item.unit_price;
+              unitPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            const totalCostInput = document.getElementById('product_total_cost');
+            if (totalCostInput && item.total_cost) totalCostInput.value = item.total_cost;
+            const purchaseDateInput = document.getElementById('product_purchase_date');
+            if (purchaseDateInput && item.purchase_date) purchaseDateInput.value = item.purchase_date;
+          });
+          suggestionBox.appendChild(div);
+        });
+        suggestionBox.style.display = 'block';
+        suggestionBox.style.width = nameInput.offsetWidth + 'px';
+      });
   });
 
-  // Account dropdown enhancements
-  const accountDropdown = document.querySelector('#navbarDropdown');
-  const dropdownMenu = document.querySelector('.dropdown-menu');
-  
-  if (accountDropdown && dropdownMenu) {
-    // Add smooth show/hide animations
-    accountDropdown.addEventListener('show.bs.dropdown', function() {
-      dropdownMenu.style.opacity = '0';
-      dropdownMenu.style.transform = 'translateY(-10px)';
-      
-      setTimeout(() => {
-        dropdownMenu.style.transition = 'all 0.3s ease';
-        dropdownMenu.style.opacity = '1';
-        dropdownMenu.style.transform = 'translateY(0)';
-      }, 10);
-    });
-    
-    accountDropdown.addEventListener('hide.bs.dropdown', function() {
-      dropdownMenu.style.transition = 'all 0.2s ease';
-      dropdownMenu.style.opacity = '0';
-      dropdownMenu.style.transform = 'translateY(-10px)';
-    });
-    
-    // Add hover effects to dropdown items
-    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
-    dropdownItems.forEach(item => {
-      item.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateX(5px)';
-      });
-      
-      item.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateX(0)';
-      });
-    });
-    
-    // Special logout button enhancement
-    const logoutButton = dropdownMenu.querySelector('button[type="submit"]');
-    if (logoutButton) {
-      logoutButton.addEventListener('click', function(e) {
-        // Add a small delay to show the click effect
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          this.style.transform = 'scale(1)';
-        }, 150);
-      });
-    }
-  }
-  
-  // Add ripple effect to buttons
-  const buttons = document.querySelectorAll('.btn, .dropdown-item');
-  buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      const ripple = document.createElement('span');
-      const rect = this.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      
-      ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-      ripple.classList.add('ripple');
-      
-      this.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
+  // Hide suggestions on blur
+  nameInput.addEventListener('blur', function() {
+    setTimeout(function() { suggestionBox.style.display = 'none'; }, 150);
   });
-});
+}
+
+document.addEventListener('DOMContentLoaded', initProductAutocomplete);
+document.addEventListener('turbo:load', initProductAutocomplete);
+document.addEventListener('DOMContentLoaded', flagBrokenImages);
+document.addEventListener('turbo:load', flagBrokenImages);

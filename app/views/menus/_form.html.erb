@@ -137,6 +137,11 @@
                         <%= check_box_tag "menu[recipe_ids][]", recipe.id, menu.recipes.include?(recipe), class: "form-check-input" %>
                       </div>
                       <div class="flex-grow-1">
+                        <% if recipe.cuisine_flag.attached? %>
+                          <div class="mb-2">
+                            <%= image_tag image_source(recipe.cuisine_flag, :thumb), class: "img-thumbnail border-0 p-0", width: 36, height: 24, style: "object-fit: cover; border-radius: 4px;" %>
+                          </div>
+                        <% end %>
                         <h6 class="card-title fw-medium text-dark mb-2"><%= recipe.name %></h6>
                         <div class="d-flex gap-2 mb-2">
                           <span class="badge bg-warning text-dark"><%= recipe.cuisine %></span>

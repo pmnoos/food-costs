@@ -3,7 +3,7 @@ class StoresController < ApplicationController
 
   # GET /stores or /stores.json
   def index
-    @stores = Store.page(params[:page]).per(12)
+    @stores = current_user.stores.with_attached_logo.includes(:products).page(params[:page]).per(12)
   end
 
   # GET /stores/1 or /stores/1.json
@@ -13,7 +13,7 @@ class StoresController < ApplicationController
 
   # GET /stores/new
   def new
-    @store = Store.new
+    @store = current_user.stores.build
   end
 
   # GET /stores/1/edit
@@ -22,7 +22,7 @@ class StoresController < ApplicationController
 
   # POST /stores or /stores.json
   def create
-    @store = Store.new(store_params)
+    @store = current_user.stores.build(store_params)
 
     respond_to do |format|
       if @store.save
@@ -61,7 +61,7 @@ class StoresController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_store
-      @store = Store.find(params.expect(:id))
+      @store = current_user.stores.with_attached_logo.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

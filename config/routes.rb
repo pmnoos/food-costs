@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  resources :product_price_history, only: [ :index ]
   devise_for :users
-  get "reports/index"
-  resources :products
+  resources :reports, only: [ :index ]
+  resources :products do
+    collection do
+      get :autocomplete
+    end
+  end
   resources :stores
   resources :recipes
   resources :menus do
@@ -10,11 +15,11 @@ Rails.application.routes.draw do
       delete :remove_recipe
     end
   end
-  
+
   # Settings and Help routes
   get "settings", to: "settings#index"
   get "help", to: "help#index"
-  
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Custom health check endpoint

@@ -46,26 +46,26 @@
                 <div class="col-lg-8">
                   <div class="card shadow-lg border-0 mb-4" style="border-radius: 1.5rem;">
                     <div class="card-header bg-white border-0" style="border-radius: 1.5rem 1.5rem 0 0;">
-                      <h5 class="mb-0 fw-bold" style="color: #fc5c7d;">Product Information</h5>
+                      <h5 class="mb-0 fw-bold" style="color: #6a82fb;">Product Information</h5>
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
                         <table class="table table-borderless align-middle mb-0">
                           <tbody>
                             <tr>
-                              <th class="text-muted">Product Name</th>
+                              <th class="product-label-bg text-dark">Product Name</th>
                               <td class="fw-semibold"><%= @product.name %></td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Purchase Date</th>
+                              <th class="product-label-bg text-dark">Purchase Date</th>
                               <td><%= @product.purchase_date&.strftime("%B %d, %Y") || "Not specified" %></td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Store</th>
+                              <th class="product-label-bg text-dark">Store</th>
                               <td><%= @product.store&.name.presence || "Not specified" %></td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Unit</th>
+                              <th class="product-label-bg text-dark">Unit</th>
                               <td>
                                 <% unit_labels = {
                                   'lb' => 'Pound (lb)',
@@ -84,15 +84,15 @@
                               </td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Unit Price</th>
+                              <th class="product-label-bg text-dark">Unit Price</th>
                               <td class="fw-bold"><%= number_to_currency(@product.unit_price) %></td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Quantity</th>
+                              <th class="product-label-bg text-dark">Quantity</th>
                               <td><%= @product.quantity %></td>
                             </tr>
                             <tr>
-                              <th class="text-muted">Total Cost</th>
+                              <th class="product-label-bg text-dark">Total Cost</th>
                               <td>
                                 <span class="fw-bold <%= @product.total_cost < 0 ? 'text-danger' : 'text-success' %>">
                                   <%= number_to_currency(@product.total_cost) %>

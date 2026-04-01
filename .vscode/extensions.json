@@ -1,7 +1,5 @@
 {
   "recommendations": [
-    "rebornix.Ruby",
-    "Shopify.ruby-lsp",
-    "ruby-lsp.ruby-lsp"
+    "Shopify.ruby-lsp"
   ]
 } 

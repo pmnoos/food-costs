@@ -1,0 +1,85 @@
+<% content_for :title, "Product Price History" %>
+
+<div class="min-vh-100 bg-light">
+  <div class="container py-5">
+    <div class="mb-4">
+      <h1 class="display-5 fw-bold text-dark mb-3">💲 Product Price History</h1>
+      <%= link_to "← Back to Reports", reports_path, class: "btn btn-outline-secondary mb-3" %>
+    </div>
+    <div class="card shadow-lg mb-5">
+      <div class="card-body p-4">
+        <%= form_with url: product_price_history_index_path, method: :get, local: true, class: "mb-4" do |form| %>
+          <div class="d-flex flex-wrap align-items-end gap-2">
+            <div style="min-width: 220px;">
+              <%= form.label :product_name, "Select Product", class: "form-label fw-semibold text-dark" %>
+              <%= form.select :product_name, options_for_select(@product_names, @selected_product_name), { prompt: "Choose a product" }, class: "form-select" %>
+            </div>
+            <div style="min-width: 180px;">
+              <%= form.label :filter, "View By", class: "form-label fw-semibold text-dark" %>
+              <%= form.select :filter, options_for_select([['All', 'all'], ['Monthly', 'monthly'], ['Yearly', 'yearly']], @filter), {}, class: "form-select" %>
+            </div>
+            <div class="d-flex gap-2 align-items-end" style="height: 100%;">
+              <%= form.submit "Show Price History", class: "btn btn-primary" %>
+              <% if @selected_product_name.present? %>
+                <%= link_to "Clear Filter", product_price_history_index_path, class: "btn btn-outline-secondary" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @selected_product_name.present? %>
+          <h5 class="fw-bold text-dark mt-4 mb-3">Price History for <%= @selected_product_name %></h5>
+          <% if @grouped_history.values.flatten.any? %>
+            <% @grouped_history.each do |period, products| %>
+              <h6 class="fw-semibold text-primary mt-4 mb-2"><%= period == "All" ? "All Purchases" : period %></h6>
+              <div class="table-responsive mb-4">
+                <table class="table table-bordered table-striped align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Date</th>
+                      <th>Store</th>
+                      <th>Unit</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+                      <th>Total Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% prev_price = nil %>
+                    <% products.each do |product| %>
+                      <tr>
+                        <td><%= product.purchase_date || product.created_at.to_date %></td>
+                        <td><%= product.store&.name %></td>
+                        <td><%= product.unit %></td>
+                        <td><%= product.quantity %></td>
+                        <td>
+                          <%= number_to_currency(product.unit_price) %>
+                          <% if prev_price && product.unit_price > prev_price %>
+                            <span class="badge bg-danger ms-2">▲ +<%= number_to_currency(product.unit_price - prev_price) %></span>
+                          <% elsif prev_price && product.unit_price < prev_price %>
+                            <span class="badge bg-success ms-2">▼ <%= number_to_currency(prev_price - product.unit_price) %></span>
+                          <% end %>
+                        </td>
+                        <td><%= number_to_currency(product.total_cost) %></td>
+                      </tr>
+                      <% prev_price = product.unit_price %>
+                    <% end %>
+                  </tbody>
+                </table>
+                <% if products.size > 1 %>
+                  <div class="mb-2 small text-muted">
+                    Highest: <%= number_to_currency(products.map(&:unit_price).max) %> |
+                    Lowest: <%= number_to_currency(products.map(&:unit_price).min) %> |
+                    Average: <%= number_to_currency(products.map(&:unit_price).sum / products.size) %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="alert alert-info">No purchases found for this product.</div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

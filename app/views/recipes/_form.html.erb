@@ -46,6 +46,34 @@
             { class: "form-select" } %>
       </div>
 
+      <div class="col-md-6">
+        <%= form.label :image, "Meal Image", class: "form-label" %>
+        <%= form.file_field :image, class: "form-control", accept: "image/*" %>
+        <% if recipe.image.attached? %>
+          <div class="mt-2 d-flex align-items-center gap-2">
+            <%= image_tag image_source(recipe.image, :card), class: "img-thumbnail", width: 160, height: 90, style: "object-fit: cover;" %>
+            <div class="form-check">
+              <%= form.check_box :remove_image, class: "form-check-input" %>
+              <%= form.label :remove_image, "Remove meal image", class: "form-check-label" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <%= form.label :cuisine_flag, "Cuisine Flag", class: "form-label" %>
+        <%= form.file_field :cuisine_flag, class: "form-control", accept: "image/*" %>
+        <% if recipe.cuisine_flag.attached? %>
+          <div class="mt-2 d-flex align-items-center gap-2">
+            <%= image_tag image_source(recipe.cuisine_flag, :preview), class: "img-thumbnail", width: 120, height: 75, style: "object-fit: contain;" %>
+            <div class="form-check">
+              <%= form.check_box :remove_cuisine_flag, class: "form-check-input" %>
+              <%= form.label :remove_cuisine_flag, "Remove flag", class: "form-check-label" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
       <div class="col-md-4">
         <%= form.label :difficulty, class: "form-label" %>
         <%= form.select :difficulty, 
@@ -87,6 +115,50 @@
             ], recipe.occasion), 
             { prompt: "Select occasion (optional)" }, 
             { class: "form-select" } %>
+      </div>
+
+      <div class="col-12">
+        <h5 class="fw-semibold mt-4 mb-2" style="color: #198754;">Nutrition (per serving)</h5>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :calories, "Calories", class: "form-label" %>
+        <%= form.number_field :calories, class: "form-control", min: 0, step: 1, placeholder: "420" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :carbohydrates_g, "Carbs (g)", class: "form-label" %>
+        <%= form.number_field :carbohydrates_g, class: "form-control", min: 0, step: 0.1, placeholder: "35.0" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :protein_g, "Protein (g)", class: "form-label" %>
+        <%= form.number_field :protein_g, class: "form-control", min: 0, step: 0.1, placeholder: "22.0" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :fat_g, "Fat (g)", class: "form-label" %>
+        <%= form.number_field :fat_g, class: "form-control", min: 0, step: 0.1, placeholder: "18.0" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :fiber_g, "Fiber (g)", class: "form-label" %>
+        <%= form.number_field :fiber_g, class: "form-control", min: 0, step: 0.1, placeholder: "6.0" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :sugar_g, "Sugar (g)", class: "form-label" %>
+        <%= form.number_field :sugar_g, class: "form-control", min: 0, step: 0.1, placeholder: "8.0" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :sodium_mg, "Sodium (mg)", class: "form-label" %>
+        <%= form.number_field :sodium_mg, class: "form-control", min: 0, step: 1, placeholder: "560" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :cholesterol_mg, "Cholesterol (mg)", class: "form-label" %>
+        <%= form.number_field :cholesterol_mg, class: "form-control", min: 0, step: 1, placeholder: "75" %>
       </div>
 
 

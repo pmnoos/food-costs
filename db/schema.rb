@@ -85,7 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_27_120000) do
     t.string "name"
     t.string "unit"
     t.decimal "unit_price"
-    t.decimal "quantity"
+    t.decimal "quantity", precision: 8, scale: 3
     t.decimal "total_cost"
     t.integer "store_id", null: false
     t.datetime "created_at", null: false

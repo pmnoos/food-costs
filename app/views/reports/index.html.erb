@@ -1,7 +1,6 @@
 <% content_for :title, "Shopping Reports" %>
 
-<div class="min-vh-100 bg-light">
-  <div class="container-fluid py-5">
+                <!-- Removed stray ERB end tags from deleted section -->
     <!-- Header -->
     <div class="text-center mb-5">
       <h1 class="display-4 fw-bold text-dark mb-3">📊 Shopping Reports</h1>
@@ -9,6 +8,9 @@
   </div>
 
     <!-- Stats Cards -->
+    <div class="mb-4">
+      <%= link_to "View Product Price History", product_price_history_index_path, class: "btn btn-outline-primary btn-lg fw-medium" %>
+    </div>
     <div class="row g-4 mb-5">
       <div class="col-md-4">
         <div class="card h-100 shadow-lg border-0">

@@ -1,12 +1,9 @@
 {
   "ruby.useLanguageServer": true,
-  "ruby.lint": {
-    "rubocop": {
-      "useBundler": true
-    }
-  },
-  "ruby.format": "rubocop",
   "ruby.intellisense": "rubyLsp",
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
+  },
   "rubyLsp.useBundler": true,
   "rubyLsp.rubocop": {
     "useBundler": true

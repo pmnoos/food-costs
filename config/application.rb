@@ -23,14 +23,34 @@ module FoodCosts
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    
+
     # Disable Action Text's default CSS loading since we're using our own embedded styles
     config.action_text.content_asset_paths = []
-    
+
     # Disable Action Text's default asset loading
     config.action_text.asset_paths = []
-    
+
     # Ensure Action Text doesn't try to load its default CSS
-    config.assets.paths.delete_if { |path| path.to_s.include?('actiontext') }
+    config.assets.paths.delete_if { |path| path.to_s.include?("actiontext") }
+
+    # Active Storage image processing strategy:
+    # - Windows: prefer MiniMagick to avoid libvips DLL issues.
+    # - Other platforms: prefer vips for performance.
+    # - Optional override: ACTIVE_STORAGE_VARIANT_PROCESSOR=mini_magick|vips
+    configured_processor = ENV["ACTIVE_STORAGE_VARIANT_PROCESSOR"]&.strip
+
+    config.active_storage.variant_processor = if configured_processor.present?
+      configured_processor.to_sym
+    elsif Gem.win_platform?
+      :mini_magick
+    else
+      :vips
+    end
+
+    # Allow turning variants off in local environments with unstable native image tooling.
+    config.x.active_storage_use_variants = ENV.fetch(
+      "ACTIVE_STORAGE_USE_VARIANTS",
+      Gem.win_platform? ? "false" : "true"
+    ) == "true"
   end
 end

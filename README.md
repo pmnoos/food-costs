@@ -135,6 +135,18 @@ This application is configured for deployment with Kamal:
    kamal deploy
    ```
 
+### Image processing on server (Active Storage)
+
+- The app auto-selects image processor by platform:
+  - Windows: `mini_magick`
+  - Non-Windows servers: `vips`
+- You can force either one with env var:
+  - `ACTIVE_STORAGE_VARIANT_PROCESSOR=mini_magick`
+  - `ACTIVE_STORAGE_VARIANT_PROCESSOR=vips`
+- Server package requirements:
+  - `mini_magick`: ImageMagick installed
+  - `vips`: libvips installed
+
 ## 🎨 Customization
 
 ### Styling

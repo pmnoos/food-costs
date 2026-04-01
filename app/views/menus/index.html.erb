@@ -63,7 +63,7 @@
     <!-- Menus Grid -->
     <div class="row g-4">
       <% @menus.each do |menu| %>
-        <div class="col-md-4 col-lg-3 col-xl-2">
+        <div class="col-md-6 col-lg-4">
           <div class="card h-100 shadow-lg border-0 hover-shadow">
             <!-- Menu Header -->
             <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center position-relative" style="height: 150px; background: linear-gradient(135deg, #28a745 0%, #007bff 100%);">
@@ -155,7 +155,10 @@
                     <h6 class="fw-medium text-dark mb-1 small">Featured Recipes:</h6>
                     <div class="d-flex flex-wrap gap-1">
                       <% menu.recipes.limit(2).each do |recipe| %>
-                        <span class="badge bg-light text-dark border small">
+                        <span class="badge bg-light text-dark border small d-inline-flex align-items-center gap-1">
+                          <% if recipe.cuisine_flag.attached? %>
+                            <%= image_tag image_source(recipe.cuisine_flag, :thumb), width: 20, height: 14, style: "object-fit: cover; border-radius: 2px;" %>
+                          <% end %>
                           <%= recipe.name %>
                         </span>
                       <% end %>

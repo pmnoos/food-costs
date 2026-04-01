@@ -10,6 +10,11 @@
               <i class="bi bi-geo-alt me-1"></i>
               <%= @recipe.cuisine %> Cuisine
             </span>
+            <% if @recipe.cuisine_flag.attached? %>
+              <span class="d-flex align-items-center">
+                <%= image_tag image_source(@recipe.cuisine_flag, :thumb), class: "img-thumbnail border-0 p-0", width: 48, height: 32, style: "object-fit: cover; border-radius: 6px;" %>
+              </span>
+            <% end %>
             <span class="d-flex align-items-center">
               <i class="bi bi-check-circle me-1"></i>
               <%= @recipe.difficulty %> Level
@@ -35,6 +40,12 @@
         </div>
       </div>
     </div>
+
+    <% if @recipe.image.attached? %>
+      <div class="card shadow-lg border-0 mb-4 overflow-hidden">
+        <%= image_tag image_source(@recipe.image, :preview), class: "w-100", style: "max-height: 460px; object-fit: cover;" %>
+      </div>
+    <% end %>
 
           <!-- Recipe Stats -->
     <div class="row g-4 mb-5">
@@ -174,6 +185,62 @@
                 <span class="badge bg-info-subtle text-info-emphasis fs-6">
                   <%= @recipe.occasion %>
                 </span>
+              </div>
+            <% end %>
+
+            <% if [@recipe.calories, @recipe.carbohydrates_g, @recipe.protein_g, @recipe.fat_g, @recipe.fiber_g, @recipe.sugar_g, @recipe.sodium_mg, @recipe.cholesterol_mg].any?(&:present?) %>
+              <div class="mb-4">
+                <h6 class="fw-medium text-dark mb-2">Nutrition (per serving)</h6>
+                <ul class="list-group list-group-flush small">
+                  <% if @recipe.calories.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Calories</span>
+                      <strong><%= @recipe.calories %></strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.carbohydrates_g.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Carbs</span>
+                      <strong><%= @recipe.carbohydrates_g %> g</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.protein_g.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Protein</span>
+                      <strong><%= @recipe.protein_g %> g</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.fat_g.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Fat</span>
+                      <strong><%= @recipe.fat_g %> g</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.fiber_g.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Fiber</span>
+                      <strong><%= @recipe.fiber_g %> g</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.sugar_g.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Sugar</span>
+                      <strong><%= @recipe.sugar_g %> g</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.sodium_mg.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Sodium</span>
+                      <strong><%= @recipe.sodium_mg %> mg</strong>
+                    </li>
+                  <% end %>
+                  <% if @recipe.cholesterol_mg.present? %>
+                    <li class="list-group-item d-flex justify-content-between px-0">
+                      <span>Cholesterol</span>
+                      <strong><%= @recipe.cholesterol_mg %> mg</strong>
+                    </li>
+                  <% end %>
+                </ul>
               </div>
             <% end %>
 

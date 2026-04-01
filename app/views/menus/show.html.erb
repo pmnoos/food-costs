@@ -48,7 +48,12 @@
                         <!-- Recipe Content -->
                         <div class="flex-grow-1">
                           <div class="d-flex align-items-start justify-content-between mb-3">
-                            <h3 class="h5 fw-bold text-dark mb-0"><%= recipe.name %></h3>
+                            <div class="d-flex align-items-center gap-2">
+                              <% if recipe.cuisine_flag.attached? %>
+                                <%= image_tag image_source(recipe.cuisine_flag, :thumb), class: "img-thumbnail border-0 p-0", width: 36, height: 24, style: "object-fit: cover; border-radius: 4px;" %>
+                              <% end %>
+                              <h3 class="h5 fw-bold text-dark mb-0"><%= recipe.name %></h3>
+                            </div>
                             <%= link_to "View Recipe", recipe_path(recipe), class: "text-primary text-decoration-none fw-medium small" %>
                           </div>
                           
