@@ -1,158 +1,160 @@
 <% content_for :title, "Shopping Reports" %>
 
-                <!-- Removed stray ERB end tags from deleted section -->
-    <!-- Header -->
-    <div class="text-center mb-5">
-      <h1 class="display-4 fw-bold text-dark mb-3">📊 Shopping Reports</h1>
-      <p class="lead text-muted">View your spending analytics and insights</p>
+<div class="container-fluid py-2">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-dark mb-3">📊 Shopping Reports</h1>
+    <p class="lead text-muted">View your spending analytics and insights</p>
   </div>
 
-    <!-- Stats Cards -->
-    <div class="mb-4">
-      <%= link_to "View Product Price History", product_price_history_index_path, class: "btn btn-outline-primary btn-lg fw-medium" %>
-    </div>
-    <div class="row g-4 mb-5">
-      <div class="col-md-4">
-        <div class="card h-100 shadow-lg border-0">
-          <div class="card-body text-center p-4">
-            <div class="display-6 text-primary mb-3">📅</div>
-            <h5 class="fw-bold text-dark mb-2">This Week</h5>
-            <div class="display-5 fw-bold text-primary mb-2">
-              <%= number_to_currency(@weekly_total) %>
-            </div>
-            <p class="text-muted small mb-0">Last 7 days</p>
-        </div>
-        </div>
-      </div>
+  <div class="mb-4">
+    <%= link_to "View Product Price History", product_price_history_index_path, class: "btn btn-outline-primary btn-lg fw-medium" %>
+  </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 shadow-lg border-0">
-          <div class="card-body text-center p-4">
-            <div class="display-6 text-success mb-3">📈</div>
-            <h5 class="fw-bold text-dark mb-2">This Month</h5>
-            <div class="display-5 fw-bold text-success mb-2">
-              <%= number_to_currency(@monthly_total) %>
-            </div>
-            <p class="text-muted small mb-0">Last 30 days</p>
-    </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 shadow-lg border-0">
-          <div class="card-body text-center p-4">
-            <div class="display-6 text-info mb-3">📊</div>
-            <h5 class="fw-bold text-dark mb-2">This Year</h5>
-            <div class="display-5 fw-bold text-info mb-2">
-              <%= number_to_currency(@yearly_total) %>
-            </div>
-            <p class="text-muted small mb-0">Year to date</p>
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card h-100 shadow-lg border-0">
+        <div class="card-body text-center p-4">
+          <div class="display-6 text-primary mb-3">📅</div>
+          <h5 class="fw-bold text-dark mb-2">This Week</h5>
+          <div class="display-5 fw-bold text-primary mb-2">
+            <%= number_to_currency(@weekly_total) %>
           </div>
+          <p class="text-muted small mb-0">Week to date</p>
         </div>
       </div>
     </div>
 
-    <!-- Spending Summary -->
-    <div class="card shadow-lg">
-      <div class="card-header bg-white border-0 p-4">
-        <h3 class="h4 fw-bold text-dark mb-0">📋 Spending Summary</h3>
-      </div>
-      <div class="card-body p-4">
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="d-flex align-items-center justify-content-between p-4 bg-primary bg-opacity-10 rounded-3 border border-primary border-opacity-25">
-              <div class="d-flex align-items-center">
-                <div class="bg-primary rounded-circle me-3" style="width: 16px; height: 16px;"></div>
-                <span class="fw-medium text-dark">This Week</span>
-        </div>
-              <span class="fw-bold text-primary fs-5"><%= number_to_currency(@weekly_total) %></span>
+    <div class="col-md-4">
+      <div class="card h-100 shadow-lg border-0">
+        <div class="card-body text-center p-4">
+          <div class="display-6 text-success mb-3">📈</div>
+          <h5 class="fw-bold text-dark mb-2">This Month</h5>
+          <div class="display-5 fw-bold text-success mb-2">
+            <%= number_to_currency(@monthly_total) %>
+          </div>
+          <p class="text-muted small mb-0">Month to date</p>
         </div>
       </div>
-          
-          <div class="col-md-4">
-            <div class="d-flex align-items-center justify-content-between p-4 bg-success bg-opacity-10 rounded-3 border border-success border-opacity-25">
-              <div class="d-flex align-items-center">
-                <div class="bg-success rounded-circle me-3" style="width: 16px; height: 16px;"></div>
-                <span class="fw-medium text-dark">This Month</span>
-              </div>
-              <span class="fw-bold text-success fs-5"><%= number_to_currency(@monthly_total) %></span>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-lg border-0">
+        <div class="card-body text-center p-4">
+          <div class="display-6 text-info mb-3">📊</div>
+          <h5 class="fw-bold text-dark mb-2">This Year</h5>
+          <div class="display-5 fw-bold text-info mb-2">
+            <%= number_to_currency(@yearly_total) %>
+          </div>
+          <p class="text-muted small mb-0">Year to date</p>
+        </div>
+      </div>
     </div>
   </div>
 
-          <div class="col-md-4">
-            <div class="d-flex align-items-center justify-content-between p-4 bg-info bg-opacity-10 rounded-3 border border-info border-opacity-25">
-              <div class="d-flex align-items-center">
-                <div class="bg-info rounded-circle me-3" style="width: 16px; height: 16px;"></div>
-                <span class="fw-medium text-dark">This Year</span>
-              </div>
-              <span class="fw-bold text-info fs-5"><%= number_to_currency(@yearly_total) %></span>
+  <div class="card shadow-lg mb-4">
+    <div class="card-body p-4">
+      <%= form_with url: reports_path, method: :get, local: true do |form| %>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3">
+            <%= form.label :name, "Product Name", class: "form-label" %>
+            <%= form.select :name,
+              options_for_select(@filter_product_names, params[:name]),
+              { prompt: "All products" },
+              { class: "form-select" } %>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <%= form.label :store_id, "Store", class: "form-label" %>
+            <%= form.select :store_id,
+              options_from_collection_for_select(@stores, :id, :name, params[:store_id]),
+              { prompt: "All stores" },
+              { class: "form-select" } %>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <%= form.label :purchase_date, "Purchase Date", class: "form-label" %>
+            <%= form.date_field :purchase_date, value: params[:purchase_date], class: "form-control" %>
+          </div>
+
+          <div class="col-md-6 col-lg-2 d-flex align-items-end">
+            <div class="d-grid gap-2 w-100">
+              <%= form.submit "Search", class: "btn btn-primary" %>
+              <%= link_to "Clear", reports_path, class: "btn btn-outline-secondary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center gap-3 mb-4">
+    <button type="button" class="btn btn-outline-secondary" onclick="exportReportCSV()">
+      <i class="bi bi-download me-2"></i>Export CSV
+    </button>
+    <button type="button" class="btn btn-outline-secondary" onclick="window.print()">
+      <i class="bi bi-printer me-2"></i>Print
+    </button>
+  </div>
+
+  <div class="row g-4 mt-4">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-4">
+          <h4 class="fw-bold text-dark mb-3">💡 Insights</h4>
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-lightbulb text-warning me-3 fs-4"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Week-to-Date Average</h6>
+              <p class="text-muted small mb-0">
+                <%= number_to_currency(@weekly_total / Date.current.cwday) %> per day so far this week
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-graph-up text-success me-3 fs-4"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Month-to-Date Average</h6>
+              <p class="text-muted small mb-0">
+                <%= number_to_currency(@monthly_total / Date.current.day) %> per day so far this month
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <i class="bi bi-calendar-check text-info me-3 fs-4"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Year-to-Date Average</h6>
+              <p class="text-muted small mb-0">
+                <%= number_to_currency(@yearly_total / Date.current.yday) %> per day so far this year
+              </p>
+            </div>
           </div>
         </div>
       </div>
-        </div>
-        
-    <!-- Additional Insights -->
-    <div class="row g-4 mt-4">
-      <div class="col-md-6">
-        <div class="card shadow-lg border-0">
-          <div class="card-body p-4">
-            <h4 class="fw-bold text-dark mb-3">💡 Insights</h4>
-            <div class="d-flex align-items-center mb-3">
-              <i class="bi bi-lightbulb text-warning me-3 fs-4"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Weekly Average</h6>
-                <p class="text-muted small mb-0">
-                  <%= number_to_currency(@weekly_total / 7) %> per day this week
-                </p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mb-3">
-              <i class="bi bi-graph-up text-success me-3 fs-4"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Monthly Trend</h6>
-                <p class="text-muted small mb-0">
-                  <%= number_to_currency(@monthly_total / 30) %> per day this month
-                </p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <i class="bi bi-calendar-check text-info me-3 fs-4"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Yearly Overview</h6>
-                <p class="text-muted small mb-0">
-                  <%= number_to_currency(@yearly_total / 365) %> per day this year
-                </p>
-              </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-4">
+          <h4 class="fw-bold text-dark mb-3">🎯 Tips</h4>
+          <div class="d-flex align-items-start mb-3">
+            <i class="bi bi-check-circle text-success me-3 mt-1"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Track Daily Spending</h6>
+              <p class="text-muted small mb-0">Monitor your daily expenses to stay within budget</p>
             </div>
           </div>
-        </div>
-        </div>
-        
-      <div class="col-md-6">
-        <div class="card shadow-lg border-0">
-          <div class="card-body p-4">
-            <h4 class="fw-bold text-dark mb-3">🎯 Tips</h4>
-            <div class="d-flex align-items-start mb-3">
-              <i class="bi bi-check-circle text-success me-3 mt-1"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Track Daily Spending</h6>
-                <p class="text-muted small mb-0">Monitor your daily expenses to stay within budget</p>
-              </div>
+          <div class="d-flex align-items-start mb-3">
+            <i class="bi bi-check-circle text-success me-3 mt-1"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Compare Periods</h6>
+              <p class="text-muted small mb-0">Compare weekly and monthly spending to identify trends</p>
             </div>
-            <div class="d-flex align-items-start mb-3">
-              <i class="bi bi-check-circle text-success me-3 mt-1"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Compare Periods</h6>
-                <p class="text-muted small mb-0">Compare weekly and monthly spending to identify trends</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-start">
-              <i class="bi bi-check-circle text-success me-3 mt-1"></i>
-              <div>
-                <h6 class="fw-medium text-dark mb-1">Set Goals</h6>
-                <p class="text-muted small mb-0">Set realistic spending goals and track your progress</p>
-              </div>
+          </div>
+          <div class="d-flex align-items-start">
+            <i class="bi bi-check-circle text-success me-3 mt-1"></i>
+            <div>
+              <h6 class="fw-medium text-dark mb-1">Set Goals</h6>
+              <p class="text-muted small mb-0">Set realistic spending goals and track your progress</p>
             </div>
           </div>
         </div>
@@ -160,3 +162,30 @@
     </div>
   </div>
 </div>
+
+<script>
+  function exportReportCSV() {
+    const rows = [
+      ["Metric", "Amount", "Period"],
+      ["This Week", "<%= @weekly_total %>", "Week to date"],
+      ["This Month", "<%= @monthly_total %>", "Month to date"],
+      ["This Year", "<%= @yearly_total %>", "Year to date"]
+    ];
+
+    const csvContent = rows
+      .map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const timestamp = new Date().toISOString().slice(0, 10);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `shopping-report-${timestamp}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+</script>

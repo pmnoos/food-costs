@@ -1,62 +1,95 @@
 # Food Costs - Grocery Expense Tracker
 
-A modern, responsive Rails application for tracking grocery purchases and managing food costs. Built with Ruby on Rails 7, Tailwind CSS, and Devise authentication.
+A modern, responsive Rails application for tracking grocery purchases, managing food costs, and planning meals. Built with Ruby on Rails 8, Bootstrap 5, and Devise authentication.
 
 ## 🚀 Features
 
-### Core Functionality
-- **Product Management**: Add, edit, and delete grocery items with detailed information
-- **Store Management**: Organize purchases by different grocery stores
-- **Purchase Tracking**: Track purchase dates and categorize spending by time periods
-- **Cost Calculations**: Automatic total cost calculation (quantity × unit price)
-- **Voucher Support**: Handle discounts and vouchers with negative values
-- **Filtering & Search**: Filter products by store and purchase date
-- **Responsive Design**: Mobile-first design that works on all devices
+### Store Management
+
+- Add grocery stores with a name, address/location, and logo image
+- Store logo uploaded via Active Storage with automatic image variants
+- Each store card shows total dollars spent at a glance
+- View all purchases grouped by date per store
+
+### Product Management
+
+- Add, edit, and delete grocery products with full detail:
+  - Product name, store, quantity, unit, unit price, purchase date
+  - Total cost calculated automatically (quantity × unit price)
+- Supports negative values for discounts and vouchers
+- Session memory remembers last used store and date for fast repeat entry
+- Autocomplete product name field pre-fills unit, price, and store from previous purchases
+- Filter products by name (dropdown), store, and purchase date
+- Export product list to CSV or print directly from the browser
+
+### Shopping Reports
+
+- Week-to-date, month-to-date, and year-to-date spending totals
+- Totals are based on product purchase dates (not entry dates)
+- Filter totals by product name, store, or purchase date
+- Export report summary to CSV or print
+
+### Product Price History
+
+- Select any product to view its full purchase history across all stores
+- Price change indicators (▲ up / ▼ down) between purchases
+- Group history by all purchases, monthly, or yearly
+- Shows highest, lowest, and average unit price per period
+
+### Recipes
+
+- Create and manage recipes with ingredients, instructions, and nutritional info
+- Filter by cuisine, difficulty, occasion, and dietary tags
+- Track prep time, cook time, servings, and detailed macros/micronutrients
+
+### Menus
+
+- Plan meals by creating menus with occasion, date, and cuisine
+- Add recipes to a menu and organise by course (starter, main, dessert, etc.)
+- Filter and browse menus by occasion and date
 
 ### User Experience
-- **Modern UI**: Clean, intuitive interface built with Tailwind CSS
-- **Quick Add Workflow**: Streamlined process for adding multiple products
-- **Session Memory**: Remembers last used store and date for quick entry
-- **Grouped Views**: Products grouped by purchase date for better organization
-- **Real-time Calculations**: Dynamic total cost updates as you type
 
-### Technical Features
-- **Authentication**: Secure user registration and login with Devise
-- **Responsive Design**: Mobile-optimized with custom media queries
-- **RESTful API**: JSON endpoints for all resources
-- **Database Migrations**: Proper schema management
-- **Testing Framework**: Comprehensive test suite included
+- Secure per-user data — stores, products, recipes, and menus are all private
+- Fully responsive design for desktop, tablet, and mobile
+- Bootstrap 5 with custom pastel styling
+- Pagination on all list views
 
 ## 🛠️ Technology Stack
 
-- **Backend**: Ruby on Rails 7.1
-- **Database**: SQLite (development), PostgreSQL (production ready)
-- **Frontend**: Tailwind CSS, Hotwire/Turbo
+- **Backend**: Ruby on Rails 8.0
+- **Database**: PostgreSQL (production), SQLite3 (development)
+- **Frontend**: Bootstrap 5, Hotwire/Turbo
 - **Authentication**: Devise
+- **File Storage**: Active Storage (local in development, configurable for cloud)
+- **Image Processing**: mini_magick (Windows) / vips (Linux/Mac)
 - **JavaScript**: Importmaps (no bundler required)
-- **Deployment**: Kamal (Docker-based deployment)
+- **Deployment**: Render / Railway / Kamal
 
 ## 📋 Prerequisites
 
 - Ruby 3.4.0 or higher
-- Rails 7.1 or higher
-- SQLite3 (for development)
-- Node.js (for Tailwind CSS compilation)
+- Rails 8.0 or higher
+- PostgreSQL (production) or SQLite3 (development)
+- ImageMagick (Windows) or libvips (Linux/Mac) for image processing
 
 ## 🚀 Installation
 
 1. **Clone the repository**
+
    ```bash
-   git clone https://github.com/yourusername/food-costs.git
+   git clone https://github.com/pmnoos/food-costs.git
    cd food-costs
    ```
 
 2. **Install dependencies**
+
    ```bash
    bundle install
    ```
 
 3. **Set up the database**
+
    ```bash
    rails db:create
    rails db:migrate
@@ -64,127 +97,94 @@ A modern, responsive Rails application for tracking grocery purchases and managi
    ```
 
 4. **Start the development server**
+
    ```bash
    bin/dev
    ```
 
 5. **Visit the application**
+
    Open your browser and go to `http://localhost:3000`
 
 ## 📱 Usage
 
 ### Getting Started
-1. **Register an account** or sign in if you already have one
-2. **Add stores** where you shop for groceries
-3. **Start adding products** with their details:
-   - Product name
-   - Store
-   - Quantity and unit
-   - Unit price
-   - Purchase date
 
-### Key Features
-- **Quick Add**: Use the "Quick Add" button to pre-fill forms with current filters
-- **Filtering**: Filter products by store and purchase date
-- **Vouchers**: Enter negative values for discounts and vouchers
-- **Multi-add Workflow**: After creating a product, you're returned to the form for quick addition of more items
-
-### Mobile Experience
-- Fully responsive design optimized for mobile devices
-- Touch-friendly interface with appropriate button sizes
-- Stacked layouts on small screens for better usability
+1. **Register an account** or sign in
+2. **Add your stores** — each store can have a name, address, and logo
+3. **Add products** as you shop, including store, quantity, unit price, and purchase date
+4. **View reports** to see your week, month, and year spending totals
+5. **Track price history** for any product across all stores over time
 
 ## 🗄️ Database Schema
 
-### Products
-- `name`: Product name
-- `quantity`: Amount purchased
-- `unit`: Unit of measurement (kg, pkt, each, etc.)
-- `unit_price`: Price per unit
-- `total_cost`: Calculated total (quantity × unit_price)
-- `purchase_date`: Date of purchase
-- `store_id`: Reference to store
+### Products Table
 
-### Stores
-- `name`: Store name
-- `location`: Store location (optional)
+- `name`, `quantity`, `unit`, `unit_price`, `total_cost`, `purchase_date`, `store_id`
 
-### Users
-- Standard Devise user model with email authentication
+### Stores Table
+
+- `name`, `location`, `user_id` + Active Storage logo attachment
+
+### Recipes Table
+
+- `name`, `cuisine`, `difficulty`, `occasion`, `prep_time`, `cook_time`, `servings`
+- `ingredients`, `instructions`, `notes`
+- Full nutritional fields: calories, protein, carbs, fat, sodium, etc.
+
+### Menus Table
+
+- `name`, `occasion`, `date`, `cuisine`, `servings`, `description`, `user_id`
+- Many-to-many with recipes via `menu_recipes` (includes course and position)
+
+### Users Table
+
+- Standard Devise user model with email/password authentication
 
 ## 🧪 Testing
 
-Run the test suite:
 ```bash
 rails test
-```
-
-Run system tests:
-```bash
 rails test:system
 ```
 
 ## 🚀 Deployment
 
-This application is configured for deployment with Kamal:
+### Render / Railway
 
-1. **Set up your server** with Docker
-2. **Configure environment variables** in `.kamal/secrets`
-3. **Deploy**:
-   ```bash
-   kamal deploy
-   ```
+The repository includes `render.yaml` and `railway.json` for one-click deployment to Render or Railway.
 
 ### Image processing on server (Active Storage)
 
-- The app auto-selects image processor by platform:
-  - Windows: `mini_magick`
-  - Non-Windows servers: `vips`
-- You can force either one with env var:
-  - `ACTIVE_STORAGE_VARIANT_PROCESSOR=mini_magick`
-  - `ACTIVE_STORAGE_VARIANT_PROCESSOR=vips`
-- Server package requirements:
-  - `mini_magick`: ImageMagick installed
-  - `vips`: libvips installed
+The app auto-selects the image processor by platform:
 
-## 🎨 Customization
+- Windows: `mini_magick` (requires ImageMagick)
+- Linux/Mac servers: `vips` (requires libvips)
 
-### Styling
-- Modify `app/assets/stylesheets/application.css` for custom styles
-- Tailwind CSS classes are used throughout the application
-- Responsive breakpoints: `sm:` (640px+), `md:` (768px+), `lg:` (1024px+)
+Override with environment variable if needed:
 
-### Adding Features
-- Controllers follow Rails conventions
-- Views use ERB templates with Tailwind CSS
-- Models include proper validations and callbacks
+```bash
+ACTIVE_STORAGE_VARIANT_PROCESSOR=mini_magick
+ACTIVE_STORAGE_VARIANT_PROCESSOR=vips
+```
 
-## 🤝 Contributing
+### Kamal (Docker)
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+```bash
+kamal deploy
+```
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Built with [Ruby on Rails](https://rubyonrails.org/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-- Authentication by [Devise](https://github.com/heartcombo/devise)
-- Deployment with [Kamal](https://kamal-deploy.org/)
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/yourusername/food-costs/issues) page
-2. Create a new issue with detailed information
-3. Include your Ruby version, Rails version, and any error messages
+- [Ruby on Rails](https://rubyonrails.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Devise](https://github.com/heartcombo/devise)
+- [Active Storage](https://guides.rubyonrails.org/active_storage_overview.html)
 
 ---
 
-**Happy grocery tracking! 🛒💰**
+Happy grocery tracking.

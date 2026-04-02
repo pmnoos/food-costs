@@ -1,0 +1,185 @@
+<% content_for :title, "Food Costs - Smart Grocery Tracking" %>
+
+<section class="landing-shell rounded-4 p-4 p-md-5 mb-4 overflow-hidden">
+  <div class="landing-glow"></div>
+  <div class="row align-items-center g-4 position-relative">
+    <div class="col-lg-7">
+      <span class="badge landing-badge mb-3">Designed for real grocery budgets</span>
+      <h1 class="display-3 fw-bold mb-3">Make every shopping trip measurable</h1>
+      <p class="lead mb-4 text-secondary-emphasis">
+        Food Costs turns receipts into clear decisions. Track spend by store,
+        monitor price changes over time, and understand exactly where your food budget is going.
+      </p>
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        <%= link_to "Create Free Account", new_user_registration_path, class: "btn btn-dark btn-lg px-4" %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-dark btn-lg px-4" %>
+      </div>
+      <div class="d-flex flex-wrap gap-3">
+        <div class="mini-stat">
+          <div class="mini-stat-value">WTD / MTD / YTD</div>
+          <div class="mini-stat-label">spending views</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-value">CSV + Print</div>
+          <div class="mini-stat-label">report exports</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-value">Price History</div>
+          <div class="mini-stat-label">for every item</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-lg rounded-4 landing-preview">
+        <div class="card-body p-4">
+          <p class="text-uppercase fw-semibold small mb-3 text-muted">Inside the app</p>
+          <div class="preview-row">
+            <span class="preview-label">This Week</span>
+            <span class="preview-value">$74.40</span>
+          </div>
+          <div class="preview-row">
+            <span class="preview-label">This Month</span>
+            <span class="preview-value">$31.20</span>
+          </div>
+          <div class="preview-row mb-3">
+            <span class="preview-label">This Year</span>
+            <span class="preview-value">$412.95</span>
+          </div>
+          <div class="small text-muted">Filter by product, store, or purchase date to focus on what matters.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mb-4">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <article class="card h-100 border-0 shadow-sm rounded-4 landing-card">
+        <div class="card-body p-4">
+          <h2 class="h5 fw-bold mb-2"><i class="bi bi-shop me-2"></i>Store Spend Snapshot</h2>
+          <p class="text-muted mb-0">See dollars spent per store immediately, so you can compare where your budget goes each month.</p>
+        </div>
+      </article>
+    </div>
+    <div class="col-md-4">
+      <article class="card h-100 border-0 shadow-sm rounded-4 landing-card">
+        <div class="card-body p-4">
+          <h2 class="h5 fw-bold mb-2"><i class="bi bi-graph-up-arrow me-2"></i>Price Change Visibility</h2>
+          <p class="text-muted mb-0">Track unit-price movement with clear history and spot when staples are creeping up in cost.</p>
+        </div>
+      </article>
+    </div>
+    <div class="col-md-4">
+      <article class="card h-100 border-0 shadow-sm rounded-4 landing-card">
+        <div class="card-body p-4">
+          <h2 class="h5 fw-bold mb-2"><i class="bi bi-clipboard2-check me-2"></i>Plan and Execute</h2>
+          <p class="text-muted mb-0">Combine product tracking with recipes and menus to connect spending data to real meal planning.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="rounded-4 p-4 p-md-5 landing-cta text-center mb-3">
+  <h2 class="fw-bold mb-2">Ready to take control of your grocery spend?</h2>
+  <p class="text-muted mb-4">Start tracking today and build a clearer picture of your food budget over time.</p>
+  <div class="d-flex flex-wrap justify-content-center gap-2">
+    <%= link_to "Get Started", new_user_registration_path, class: "btn btn-dark btn-lg px-4" %>
+    <%= link_to "Already have an account? Sign In", new_user_session_path, class: "btn btn-outline-dark btn-lg px-4" %>
+  </div>
+</section>
+
+<style>
+  :root {
+    --landing-ink: #18242f;
+    --landing-mint: #d9f6e3;
+    --landing-sand: #f7efd7;
+    --landing-sky: #dceeff;
+    --landing-shadow: rgba(24, 36, 47, 0.12);
+  }
+
+  .landing-shell {
+    background: linear-gradient(115deg, var(--landing-sky) 0%, var(--landing-sand) 55%, var(--landing-mint) 100%);
+    position: relative;
+  }
+
+  .landing-glow {
+    position: absolute;
+    right: -90px;
+    top: -80px;
+    width: 280px;
+    height: 280px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 72%);
+  }
+
+  .landing-badge {
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--landing-ink);
+    border: 1px solid rgba(24, 36, 47, 0.1);
+  }
+
+  .landing-preview {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+  }
+
+  .preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .preview-label {
+    color: #5b6670;
+    font-weight: 500;
+  }
+
+  .preview-value {
+    color: var(--landing-ink);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .mini-stat {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.9rem;
+    padding: 0.65rem 0.8rem;
+    min-width: 128px;
+  }
+
+  .mini-stat-value {
+    font-weight: 700;
+    color: var(--landing-ink);
+    font-size: 0.93rem;
+  }
+
+  .mini-stat-label {
+    color: #66707a;
+    font-size: 0.78rem;
+  }
+
+  .landing-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .landing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px var(--landing-shadow) !important;
+  }
+
+  .landing-cta {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f8fb 100%);
+    border: 1px solid rgba(24, 36, 47, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    .landing-shell .display-3 {
+      font-size: 2.1rem;
+    }
+  }
+</style>

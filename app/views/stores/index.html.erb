@@ -29,10 +29,10 @@
                 <% else %>
                   <span class="display-1">🏪</span>
                 <% end %>
-                <!-- Store Count Badge -->
+                <!-- Store Spend Badge -->
                 <div class="position-absolute top-0 end-0 m-3">
-                  <span class="store-badge-count d-inline-flex align-items-center justify-content-center fw-bold shadow" style="background: var(--pastel-primary); color: var(--text-dark); border-radius: 2rem; min-width: 2.5rem; min-height: 2.5rem; font-size: 1.2rem; border: 2px solid var(--pastel-accent); box-shadow: 0 2px 8px var(--shadow-soft);">
-                    <%= store.products.count %>
+                  <span class="store-badge-count d-inline-flex align-items-center justify-content-center fw-bold shadow" style="background: var(--pastel-primary); color: var(--text-dark); border-radius: 2rem; min-width: 2.5rem; padding: 0.25rem 0.6rem; font-size: 0.85rem; border: 2px solid var(--pastel-accent); box-shadow: 0 2px 8px var(--shadow-soft);">
+                    <%= number_to_currency(store.products.sum(:total_cost), precision: 0) %>
                   </span>
                 </div>
               </div>

@@ -4,7 +4,9 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = products_scope.includes(:store).order(purchase_date: :desc, created_at: :desc)
+    base_scope = products_scope.includes(:store)
+    @product_names = base_scope.where.not(name: [ nil, "" ]).distinct.order(:name).pluck(:name)
+    @products = base_scope.order(purchase_date: :desc, created_at: :desc)
 
     if params[:name].present?
       @products = @products.where("products.name ILIKE ?", "%#{params[:name]}%")

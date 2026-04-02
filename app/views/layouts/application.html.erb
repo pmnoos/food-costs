@@ -41,7 +41,7 @@
   <body>
     <!-- Site header -->
     <header class="site-header py-2 px-3 bg-light border-bottom">
-      <%= link_to root_path, class: "custom-brand d-flex align-items-center text-decoration-none" do %>
+      <%= link_to(user_signed_in? ? authenticated_root_path : unauthenticated_root_path, class: "custom-brand d-flex align-items-center text-decoration-none") do %>
         <i class="bi bi-basket me-2"></i>My Food Costs Manager
       <% end %>
     </header>

@@ -3,6 +3,7 @@ require "test_helper"
 class StoresControllerTest < ActionDispatch::IntegrationTest
   setup do
     @store = stores(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do

@@ -3,6 +3,7 @@ require "test_helper"
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @product = products(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
@@ -20,7 +21,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       post products_url, params: { product: { name: @product.name, quantity: @product.quantity, store_id: @product.store_id, total_cost: @product.total_cost, unit: @product.unit, unit_price: @product.unit_price } }
     end
 
-    assert_redirected_to product_url(Product.last)
+    assert_redirected_to new_product_url
   end
 
   test "should show product" do
